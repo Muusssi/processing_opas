@@ -67,9 +67,45 @@ class Tasohyppelyhahmo {
     this.kuva = kuva;
   }
   
-  void aseta(float x, float y) {
+  void aseta(float x, float korkeus) {
     this.x = x;
-    this.y = y;
+    this.y = height-korkeus;
+  }
+  
+  void aseta_nopeus(float nopeus) {
+    liikutus_nopeus = nopeus;
+  }
+  
+  void aseta_hyppynopeus(float nopeus) {
+    liikutus_nopeus = nopeus;
+  }
+  
+  float etaisyys_sivusuunnassa(Tasohyppelyhahmo toinen_hahmo) {
+    if (x+kuva.width < toinen_hahmo.x) {
+      return toinen_hahmo.x - (x+kuva.width);
+    }
+    else if (x > toinen_hahmo.x+toinen_hahmo.kuva.width) {
+      return x - (toinen_hahmo.x+toinen_hahmo.kuva.width);
+    }
+    else {
+      return 0;
+    }
+  }
+  
+  boolean koskee(Tasohyppelyhahmo toinen_hahmo) {
+    if (x+kuva.width < toinen_hahmo.x) {
+      return false;
+    }
+    else if (x > toinen_hahmo.x+toinen_hahmo.kuva.width) {
+      return false;
+    }
+    else if (y+kuva.height < toinen_hahmo.y) {
+      return false;
+    }
+    else if (y > toinen_hahmo.y+toinen_hahmo.kuva.height) {
+      return false;
+    }
+    return true;
   }
   
   void piirra() {
@@ -95,10 +131,23 @@ class Tasohyppelyhahmo {
     viimeksi_vasemmalle = true;
   }
   
-  void hyppaa() {
+  void hyppy() {
     if (y_nopeus == 0) {
       y_nopeus = -hyppy_nopeus;
     }
+  }
+  
+  void liiku_itsestaan(float vasen_reuna, float oikea_reuna) {
+    if (liikutus_nopeus > 0 && (x+kuva.width/2 > oikea_reuna || x+kuva.width >= width)) {
+      liikutus_nopeus = -liikutus_nopeus;
+      viimeksi_vasemmalle = true;
+    }
+    else if (liikutus_nopeus < 0 && (x+kuva.width/2 < vasen_reuna || x <= 0)) {
+      liikutus_nopeus = -liikutus_nopeus;
+      viimeksi_vasemmalle = false;
+    } 
+    x = constrain(x+liikutus_nopeus, 0, width-kuva.width);
+    this.tipu();
   }
   
   private void tipu() {
@@ -137,5 +186,7 @@ class Tasohyppelyhahmo {
     }
     return lattia;
   }
+  
+  
 
 }
