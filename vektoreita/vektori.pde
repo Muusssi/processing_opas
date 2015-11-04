@@ -39,14 +39,13 @@ class Vektori {
 
   Vektori(float i, float j, float k) {
     this.arvot = new float[3];
-    //TODO
+    // TODO
   }
   
   Vektori(float i, float j) {
     this.arvot = new float[2];
     this.arvot[0] = i;
-    this.arvot[1] = i;
-    //TODO
+    this.arvot[1] = j;
   }
 
   Vektori summa(Vektori v) {
@@ -64,11 +63,6 @@ class Vektori {
     return new Vektori(new float[2]);
   }
 
-  Vektori ristitulo(Vektori v) {
-    // TODO
-    return new Vektori(new float[2]);
-  }
-
   float pituus() {
     // TODO
     return 0;
@@ -79,8 +73,24 @@ class Vektori {
     return new Vektori(new float[2]);
   }
 
+  boolean yhtasuuri(Vektori v) {
+    // TODO
+    return false;
+  }
+
+  void tulosta() {
+    String rivi = "[";
+    for (int i=0; i<arvot.length; i++) {
+      rivi += arvot[i];
+      if (i < arvot.length-1) {
+        rivi += ", ";
+      }
+    }
+    println(rivi+"]");
+  }
+
   void piirra() {
-    // Piirtää vektorin koordinaatistoon
+    // Piirtää vektorin 2D koordinaatistoon eli jättää muut dimensiot huomiotta
     if (origo == null) {
       asetaOrigoKeskelle();
     }
