@@ -61,7 +61,7 @@ class Tasohyppelyhahmo {
   private float y_nopeus = 0;
   private float putoamiskiihtyvyys = 0.3;
   private float hyppy_nopeus = 8;
-  private boolean viimeksi_vasemmalle = false;
+  boolean viimeksi_vasemmalle = false;
   
   Tasohyppelyhahmo(PImage kuva) {
     this.kuva = kuva;
