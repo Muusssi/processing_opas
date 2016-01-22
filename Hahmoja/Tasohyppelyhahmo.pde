@@ -1,4 +1,4 @@
-/* Tommi Oinonen 2016 - versio 2.0
+/* Tommi Oinonen 2016 - versio 2.1
  * 2D tasohyppely pelin hahmoihin ja tasoihin toteuttava koodi.
  * Kopioi tämä koko tiedosto projektiisi niin voit käyttää 
  * hahmoja pelissäsi. 
@@ -14,10 +14,18 @@ final int VALILYONTI = 32;
 ArrayList<Taso> tasot = new ArrayList<Taso>();
 
 float maailman_leveys = 1200;
-float maailman_korkeus = 800;
+float maailman_korkeus = 10000;
 
 float kameran_siirto_x = 0;
 float kameran_siirto_y = 0;
+boolean koordinaatisto_alustettu = false;
+
+private void alusta_koordinaatisto() {
+  pushMatrix();
+  translate(kameran_siirto_x, height+kameran_siirto_y);
+  scale(1, -1);
+  pushMatrix();
+}
 
 void piirra_tasot() {
   for (int i=0; i<tasot.size(); i++) {
@@ -36,6 +44,9 @@ class Taso {
     this.y = korkeus;
     this.pituus = pituus;
     tasot.add(this);
+    if (!koordinaatisto_alustettu) {
+      alusta_koordinaatisto();
+    }
   }
 
   void aseta_vari(int pun, int vih, int sin) {
@@ -44,7 +55,9 @@ class Taso {
   
   void piirra() {
     stroke(this.vari);
-    line(x+kameran_siirto_x, height-y-kameran_siirto_y, x+kameran_siirto_x+pituus, height-y-kameran_siirto_y);
+    //line(x+kameran_siirto_x, height-y-kameran_siirto_y, x+kameran_siirto_x+pituus, height-y-kameran_siirto_y);
+    line(x, y, x+pituus, y);
+
   }
   
   boolean onko_kohdalla(Tasohyppelyhahmo hahmo) {
@@ -86,6 +99,9 @@ class Tasohyppelyhahmo {
   
   Tasohyppelyhahmo(PImage kuva) {
     this.kuva = kuva;
+    if (!koordinaatisto_alustettu) {
+      alusta_koordinaatisto();
+    }
   }
   
   void aseta(float x, float y) {
@@ -133,11 +149,12 @@ class Tasohyppelyhahmo {
     tipu();
     pushMatrix();
     if (viimeksi_vasemmalle) {
-      scale(-1.0, 1.0);
-      image(kuva, -(x+kuva.width+kameran_siirto_x), height-kameran_siirto_y-y-kuva.height);
+      scale(-1.0, -1.0);
+      image(kuva, -(x+kuva.width), -y-kuva.height);
     }
     else {
-      image(kuva, x+kameran_siirto_x, height-kameran_siirto_y-y-kuva.height);
+      scale(1.0, -1.0);
+      image(kuva, x, -y-kuva.height);
     }
     popMatrix();
   }
@@ -159,14 +176,15 @@ class Tasohyppelyhahmo {
   }
   
   void liiku_itsestaan(float vasen_reuna, float oikea_reuna) {
-    if (liikutus_nopeus > 0 && (x+kuva.width/2 > oikea_reuna || x+kuva.width >= maailman_leveys)) {
-      liikutus_nopeus = -liikutus_nopeus;
+    if (x <= vasen_reuna || x >= oikea_reuna) {
+      viimeksi_vasemmalle = !viimeksi_vasemmalle;
+    }
+    if (viimeksi_vasemmalle) {
+      liiku_vasemmalle();
+    }
+    else if (!viimeksi_vasemmalle) {
       liiku_oikealle();
     }
-    else if (liikutus_nopeus < 0 && (x+kuva.width/2 < vasen_reuna || x <= 0)) {
-      liikutus_nopeus = -liikutus_nopeus;
-      liiku_vasemmalle();
-    } 
   }
   
   private void tipu() {
@@ -208,6 +226,8 @@ class Tasohyppelyhahmo {
   }
 
   public void seuraa_kameralla() {
+    popMatrix();
+    pushMatrix();
     //println("kameran_siirto_y: "+kameran_siirto_y);
     if (x+kameran_siirto_x > 2*width/3)
       kameran_siirto_x = constrain(kameran_siirto_x-liikutus_nopeus, -maailman_leveys+width, 0);
@@ -218,6 +238,7 @@ class Tasohyppelyhahmo {
       kameran_siirto_y = constrain(kameran_siirto_y-y_nopeus, -maailman_korkeus+height, 0);
     else if (y_nopeus < 0 && y+kameran_siirto_y < 2*height/5)
       kameran_siirto_y = constrain(kameran_siirto_y-y_nopeus, -maailman_korkeus+height, 0);
+    translate(kameran_siirto_x, kameran_siirto_y);
   }
   
 }
