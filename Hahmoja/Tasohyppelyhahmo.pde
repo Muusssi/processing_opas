@@ -1,4 +1,4 @@
-/* Tommi Oinonen 2016 - versio 2.1
+/* Tommi Oinonen 2016 - versio 2.1.1
  * 2D tasohyppely pelin hahmoihin ja tasoihin toteuttava koodi.
  * Kopioi tämä koko tiedosto projektiisi niin voit käyttää 
  * hahmoja pelissäsi. 
@@ -25,6 +25,7 @@ private void alusta_koordinaatisto() {
   translate(kameran_siirto_x, height+kameran_siirto_y);
   scale(1, -1);
   pushMatrix();
+  koordinaatisto_alustettu = true;
 }
 
 void piirra_tasot() {
