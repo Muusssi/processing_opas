@@ -1,4 +1,4 @@
-/* Tommi Oinonen 2016 - versio 2.1.1
+/* Tommi Oinonen 2016 - versio 2.2
  * 2D tasohyppely pelin hahmoihin ja tasoihin toteuttava koodi.
  * Kopioi tämä koko tiedosto projektiisi niin voit käyttää 
  * hahmoja pelissäsi. 
@@ -26,6 +26,27 @@ private void alusta_koordinaatisto() {
   scale(1, -1);
   pushMatrix();
   koordinaatisto_alustettu = true;
+}
+
+public class Tausta {
+  PImage kuva;
+
+  public Tausta (PImage kuva) {
+    this.kuva = kuva;
+    maailman_leveys = kuva.width;
+    maailman_korkeus = kuva.height;
+    if (!koordinaatisto_alustettu) {
+      alusta_koordinaatisto();
+    }
+  }
+
+  void piirra() {
+    pushMatrix();
+    translate(kameran_siirto_x, -kameran_siirto_y+height-kuva.height);
+    image(kuva, 0, 0);
+    popMatrix();
+  }
+
 }
 
 void piirra_tasot() {
@@ -97,6 +118,7 @@ class Tasohyppelyhahmo {
   private float putoamiskiihtyvyys = -0.3;
   private float hyppynopeus = 8;
   boolean viimeksi_vasemmalle = false;
+  private boolean kaksoishyppy = false;
   
   Tasohyppelyhahmo(PImage kuva) {
     this.kuva = kuva;
@@ -173,6 +195,11 @@ class Tasohyppelyhahmo {
   void hyppy() {
     if (y_nopeus == 0) {
       y_nopeus = hyppynopeus;
+      kaksoishyppy = false;
+    }
+    else if (!kaksoishyppy) {
+      y_nopeus = hyppynopeus;
+      kaksoishyppy = true;
     }
   }
   
@@ -205,7 +232,7 @@ class Tasohyppelyhahmo {
   }
   
   private float seuraava_katto() {
-    float katto = maailman_korkeus-kuva.height;
+    float katto = maailman_korkeus;
     for (int i=0; i<tasot.size(); i++) {
       Taso taso = tasot.get(i);
       if (taso.y < katto && taso.onko_alla(this)) {
@@ -227,18 +254,22 @@ class Tasohyppelyhahmo {
   }
 
   public void seuraa_kameralla() {
+    boolean siirto = false;
     popMatrix();
     pushMatrix();
-    //println("kameran_siirto_y: "+kameran_siirto_y);
-    if (x+kameran_siirto_x > 2*width/3)
+    if (x+kameran_siirto_x > 2*width/3) {
       kameran_siirto_x = constrain(kameran_siirto_x-liikutus_nopeus, -maailman_leveys+width, 0);
-    else if (x+kameran_siirto_x < width/3)
+    }
+    else if (x+kameran_siirto_x < width/3) {
       kameran_siirto_x = constrain(kameran_siirto_x+liikutus_nopeus, -maailman_leveys+width, 0);
+    }
 
-    if (y_nopeus > 0 && y-kameran_siirto_y > 2*height/3)
+    if (y_nopeus > 0 && y-kameran_siirto_y > 2*height/3) {
       kameran_siirto_y = constrain(kameran_siirto_y-y_nopeus, -maailman_korkeus+height, 0);
-    else if (y_nopeus < 0 && y+kameran_siirto_y < 2*height/5)
+    }
+    else if (y_nopeus < 0 && y+kameran_siirto_y < 2*height/5) {
       kameran_siirto_y = constrain(kameran_siirto_y-y_nopeus, -maailman_korkeus+height, 0);
+    }
     translate(kameran_siirto_x, kameran_siirto_y);
   }
   
