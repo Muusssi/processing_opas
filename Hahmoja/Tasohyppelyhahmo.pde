@@ -1,4 +1,4 @@
-/* Tommi Oinonen 2016 - versio 2.2
+/* Tommi Oinonen 2016 - versio 2.3
  * 2D tasohyppely pelin hahmoihin ja tasoihin toteuttava koodi.
  * Kopioi tämä koko tiedosto projektiisi niin voit käyttää 
  * hahmoja pelissäsi. 
@@ -77,7 +77,6 @@ class Taso {
   
   void piirra() {
     stroke(this.vari);
-    //line(x+kameran_siirto_x, height-y-kameran_siirto_y, x+kameran_siirto_x+pituus, height-y-kameran_siirto_y);
     line(x, y, x+pituus, y);
 
   }
@@ -166,6 +165,15 @@ class Tasohyppelyhahmo {
       return false;
     }
     return true;
+  }
+
+  void tyonna(Tasohyppelyhahmo toinen_hahmo) {
+    if (this.x < toinen_hahmo.x) {
+      toinen_hahmo.x -= toinen_hahmo.x - this.x - this.kuva.width;
+    }
+    else {
+      toinen_hahmo.x += this.x - toinen_hahmo.x - toinen_hahmo.kuva.width;
+    }
   }
   
   void piirra() {
