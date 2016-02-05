@@ -1,6 +1,6 @@
 // piirtämistä varten
 float[] origo = null;
-float skaala = 100;
+float skaala = 50;
 
 void koordinaatisto() {
   // Piirtää koordinaatti akselit
