@@ -1,4 +1,4 @@
-/* Tommi Oinonen 2016 - versio 2.3
+/* Tommi Oinonen 2016 - versio 2.4
  * 2D tasohyppely pelin hahmoihin ja tasoihin toteuttava koodi.
  * Kopioi tämä koko tiedosto projektiisi niin voit käyttää 
  * hahmoja pelissäsi. 
@@ -25,6 +25,7 @@ private void alusta_koordinaatisto() {
   translate(kameran_siirto_x, height+kameran_siirto_y);
   scale(1, -1);
   pushMatrix();
+  scale(1,1);
   koordinaatisto_alustettu = true;
 }
 
@@ -55,7 +56,7 @@ void piirra_tasot() {
   }
 }
 
-// Taso, jonka päällä hamot voivat hyppiä
+// Taso, jonka päällä hahmot voivat hyppiä
 class Taso {
   float x, y;
   float pituus;
@@ -261,23 +262,33 @@ class Tasohyppelyhahmo {
     return lattia;
   }
 
+  public void kohdista_kamera() {
+    kameran_siirto_x = constrain(-x+width/2, -maailman_leveys+width, 0);
+    kameran_siirto_y = constrain(-y+height/2, -maailman_korkeus+height, 0);
+  }
+
   public void seuraa_kameralla() {
-    boolean siirto = false;
-    popMatrix();
-    pushMatrix();
+    float kameran_liikutus_nopeus_x = liikutus_nopeus;
+    float kameran_liikutus_nopeus_y = liikutus_nopeus;
+    
+    if (x+kameran_siirto_x > width || x+kameran_siirto_x < 0) {
+      kameran_liikutus_nopeus_x = width/8;
+    }
     if (x+kameran_siirto_x > 2*width/3) {
-      kameran_siirto_x = constrain(kameran_siirto_x-liikutus_nopeus, -maailman_leveys+width, 0);
+      kameran_siirto_x = constrain(kameran_siirto_x-kameran_liikutus_nopeus_x, -maailman_leveys+width, 0);
     }
     else if (x+kameran_siirto_x < width/3) {
-      kameran_siirto_x = constrain(kameran_siirto_x+liikutus_nopeus, -maailman_leveys+width, 0);
+      kameran_siirto_x = constrain(kameran_siirto_x+kameran_liikutus_nopeus_x, -maailman_leveys+width, 0);
     }
 
-    if (y_nopeus > 0 && y-kameran_siirto_y > 2*height/3) {
-      kameran_siirto_y = constrain(kameran_siirto_y-y_nopeus, -maailman_korkeus+height, 0);
+    if (y_nopeus != 0) {
+      kameran_liikutus_nopeus_y = -y_nopeus;
     }
-    else if (y_nopeus < 0 && y+kameran_siirto_y < 2*height/5) {
-      kameran_siirto_y = constrain(kameran_siirto_y-y_nopeus, -maailman_korkeus+height, 0);
+    if ((y+kameran_siirto_y > 2*height/3 && y_nopeus>0) || (y+kameran_siirto_y < 2*height/5 && y_nopeus<0)) {
+      kameran_siirto_y = constrain(kameran_siirto_y+kameran_liikutus_nopeus_y, -maailman_korkeus+height, 0);
     }
+    popMatrix();
+    pushMatrix();
     translate(kameran_siirto_x, kameran_siirto_y);
   }
   
