@@ -1,8 +1,18 @@
-/* Tommi Oinonen 2016 - versio 2.4
+/* Tommi Oinonen 2016 - versio 2.5
  * 2D tasohyppely pelin hahmoihin ja tasoihin toteuttava koodi.
  * Kopioi tämä koko tiedosto projektiisi niin voit käyttää 
  * hahmoja pelissäsi. 
  */
+
+
+/* TODOs:
+- Seinät
+- Kursori-koordinaatisto muunnin
+- harvempi suihke
+*/
+
+import java.util.Collections;
+import java.util.Comparator;
 
 // Painike koodeja
 final int VASEN_NUOLI = 37;
@@ -12,6 +22,9 @@ final int ALAS_NUOLI = 40;
 final int VALILYONTI = 32;
 
 ArrayList<Taso> tasot = new ArrayList<Taso>();
+ArrayList<Taso> tasotKorkeudenMukaan = new ArrayList<Taso>();
+
+
 
 float maailman_leveys = 1200;
 float maailman_korkeus = 10000;
@@ -25,8 +38,15 @@ private void alusta_koordinaatisto() {
   translate(kameran_siirto_x, height+kameran_siirto_y);
   scale(1, -1);
   pushMatrix();
-  scale(1,1);
   koordinaatisto_alustettu = true;
+}
+
+public float mouse_x() {
+  return mouseX - kameran_siirto_x;
+}
+
+public float mouse_y() {
+  return height - mouseY -kameran_siirto_y;
 }
 
 public class Tausta {
@@ -50,9 +70,17 @@ public class Tausta {
 
 }
 
+// Piirtää näkyvissä olevat tasot
 void piirra_tasot() {
   for (int i=0; i<tasot.size(); i++) {
-    tasot.get(i).piirra();
+    Taso t = tasotKorkeudenMukaan.get(i);
+    if (t.y > height-kameran_siirto_y) {
+      return;
+    }
+    else if (t.y > -kameran_siirto_y) {
+      if (t.x+t.pituus > -kameran_siirto_x && t.x < width-kameran_siirto_x)
+        t.piirra();
+    }
   }
 }
 
@@ -67,6 +95,8 @@ class Taso {
     this.y = korkeus;
     this.pituus = pituus;
     tasot.add(this);
+    tasotKorkeudenMukaan = new ArrayList<Taso>(tasot);
+    Collections.sort(tasotKorkeudenMukaan, new TasoKorkeusVertailija());
     if (!koordinaatisto_alustettu) {
       alusta_koordinaatisto();
     }
@@ -106,6 +136,19 @@ class Taso {
     return false;
   }
   
+}
+
+/*Tasojen järjestäjät */
+public class TasoKorkeusVertailija implements Comparator<Taso> {
+  @Override
+  public int compare(Taso t1, Taso t2) {
+    if (t1.y < t2.y)
+      return -1;
+    else if (t1.y > t2.y)
+      return 1;
+    else
+      return 0;
+  }
 }
 
 
@@ -213,7 +256,7 @@ class Tasohyppelyhahmo {
   }
   
   void liiku_itsestaan(float vasen_reuna, float oikea_reuna) {
-    if (x <= vasen_reuna || x >= oikea_reuna) {
+    if ((x <= vasen_reuna && viimeksi_vasemmalle) || (x >= oikea_reuna && !viimeksi_vasemmalle)) {
       viimeksi_vasemmalle = !viimeksi_vasemmalle;
     }
     if (viimeksi_vasemmalle) {
@@ -242,8 +285,11 @@ class Tasohyppelyhahmo {
   
   private float seuraava_katto() {
     float katto = maailman_korkeus;
-    for (int i=0; i<tasot.size(); i++) {
-      Taso taso = tasot.get(i);
+    for (int i=tasotKorkeudenMukaan.size()-1; i>=0; i--) {
+      Taso taso = tasotKorkeudenMukaan.get(i);
+      if (taso.y < y) {
+        return katto;
+      }
       if (taso.y < katto && taso.onko_alla(this)) {
         katto = taso.y;
       }
@@ -253,8 +299,10 @@ class Tasohyppelyhahmo {
   
   private float seuraava_lattia() {
     float lattia = 0;
-    for (int i=0; i<tasot.size(); i++) {
-      Taso taso = tasot.get(i);
+    for (int i=0; i<tasotKorkeudenMukaan.size(); i++) {
+      Taso taso = tasotKorkeudenMukaan.get(i);
+      if (taso.y > y)
+        return lattia;
       if (taso.y > lattia && taso.onko_paalla(this)) {
         lattia = taso.y;
       }
@@ -284,9 +332,16 @@ class Tasohyppelyhahmo {
     if (y_nopeus != 0) {
       kameran_liikutus_nopeus_y = -y_nopeus;
     }
-    if ((y+kameran_siirto_y > 2*height/3 && y_nopeus>0) || (y+kameran_siirto_y < 2*height/5 && y_nopeus<0)) {
+    else if (y < -kameran_siirto_y) {
+      kameran_liikutus_nopeus_y = height/8;
+    }
+    else if (y > height-kameran_siirto_y) {
+      kameran_liikutus_nopeus_y = -height/8;
+    }
+    if ((y+kameran_siirto_y > 2*height/3 && y_nopeus>=0) || (y+kameran_siirto_y < 2*height/5 && y_nopeus<=0)) {
       kameran_siirto_y = constrain(kameran_siirto_y+kameran_liikutus_nopeus_y, -maailman_korkeus+height, 0);
     }
+
     popMatrix();
     pushMatrix();
     translate(kameran_siirto_x, kameran_siirto_y);
