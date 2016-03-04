@@ -1,4 +1,4 @@
-/* Tommi Oinonen 2016 - versio 2.5
+/* Tommi Oinonen 2016 - versio 2.5.1
  * 2D tasohyppely pelin hahmoihin ja tasoihin toteuttava koodi.
  * Kopioi tämä koko tiedosto projektiisi niin voit käyttää 
  * hahmoja pelissäsi. 
@@ -33,7 +33,7 @@ float kameran_siirto_x = 0;
 float kameran_siirto_y = 0;
 boolean koordinaatisto_alustettu = false;
 
-private void alusta_koordinaatisto() {
+public void alusta_koordinaatisto() {
   pushMatrix();
   translate(kameran_siirto_x, height+kameran_siirto_y);
   scale(1, -1);
@@ -156,12 +156,12 @@ class Tasohyppelyhahmo {
   float x = 0;
   float y = 0;
   PImage kuva;
-  private float liikutus_nopeus = 5;
-  private float y_nopeus = 0;
-  private float putoamiskiihtyvyys = -0.3;
-  private float hyppynopeus = 8;
+  public float liikutus_nopeus = 5;
+  public float y_nopeus = 0;
+  public float putoamiskiihtyvyys = -0.3;
+  public float hyppynopeus = 8;
   boolean viimeksi_vasemmalle = false;
-  private boolean kaksoishyppy = false;
+  public boolean kaksoishyppy = false;
   
   Tasohyppelyhahmo(PImage kuva) {
     this.kuva = kuva;
@@ -267,7 +267,7 @@ class Tasohyppelyhahmo {
     }
   }
   
-  private void tipu() {
+  public void tipu() {
     float lattia = seuraava_lattia();
     float katto = seuraava_katto();
     
@@ -283,7 +283,7 @@ class Tasohyppelyhahmo {
     y = constrain(y+y_nopeus, lattia, katto+kuva.height);
   }
   
-  private float seuraava_katto() {
+  public float seuraava_katto() {
     float katto = maailman_korkeus;
     for (int i=tasotKorkeudenMukaan.size()-1; i>=0; i--) {
       Taso taso = tasotKorkeudenMukaan.get(i);
@@ -297,7 +297,7 @@ class Tasohyppelyhahmo {
     return katto;
   }
   
-  private float seuraava_lattia() {
+  public float seuraava_lattia() {
     float lattia = 0;
     for (int i=0; i<tasotKorkeudenMukaan.size(); i++) {
       Taso taso = tasotKorkeudenMukaan.get(i);
