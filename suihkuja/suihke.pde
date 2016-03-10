@@ -1,19 +1,23 @@
 
 class Suihke {
-    private float x, y, x_suunta, y_suunta;
-    private float nopeus = 3.4;
-    private int hiukasTiheys = 5;
-    private float hajonta = 0.5;
+    float x, y, x_suunta, y_suunta;
+    float nopeus = 0.4;
+    int hiukasTiheys = 100;
+    int syke_vali = 0;
+    float hajonta = 3;
+    int elin_aika = 100;
 
-    private ArrayList<Hiukkanen> hiukkaset = new ArrayList<Hiukkanen>();
-    private IntList poistettavat = new IntList();
+    ArrayList<Hiukkanen> hiukkaset = new ArrayList<Hiukkanen>();
+    IntList poistettavat = new IntList();
 
-    private int pun = 250;
-    private int sin = 0;
-    private int vih = 200;
-    private int punaHajonta = 0;
-    private int viherHajonta = 50;
-    private int siniHajonta = 50;
+    int pun = 250;
+    int sin = 0;
+    int vih = 200;
+    int punaHajonta = 0;
+    int viherHajonta = 50;
+    int siniHajonta = 50;
+
+    private int edellinen_hiukkanen = 0;
 
     Suihke(float x, float y, float x_suunta, float y_suunta) {
         this.x = x;
@@ -46,6 +50,10 @@ class Suihke {
         siniHajonta = sinHajo;
     }
 
+    void aseta_nopeus(float nopeus) {
+        this.nopeus = nopeus;
+    }
+
     boolean osuuko(float x, float y, float sade) {
         Hiukkanen h;
         for (int i=0; i<hiukkaset.size(); i++) {
@@ -57,16 +65,19 @@ class Suihke {
     }
 
     void piirra(boolean jatka) {
-        y += 0.1;
-        if (jatka) {
+        if (jatka && syke_vali<(frameCount-edellinen_hiukkanen)) {
+            edellinen_hiukkanen = frameCount;
             for (int i=0; i<hiukasTiheys; i++) {
                 hiukkaset.add(new Hiukkanen(
-                    x, y, x_suunta+randomGaussian()*hajonta,y_suunta+randomGaussian()*hajonta,
+                    x, y,
+                    x_suunta+randomGaussian()*hajonta,
+                    y_suunta+randomGaussian()*hajonta,
                     color(
                         pun+random(-punaHajonta, punaHajonta),
                         vih+random(-viherHajonta, viherHajonta),
                         sin+random(-siniHajonta, siniHajonta)
-                    )
+                    ),
+                    elin_aika
                 ));
             }
         }
@@ -74,7 +85,7 @@ class Suihke {
         for (int i=0; i<hiukkaset.size(); i++) {
             h = hiukkaset.get(i);
             h.piirra();
-            if (h.elinAika <= 0) {
+            if (h.elin_aika <= 0) {
                 poistettavat.append(i);
             }
         }
@@ -84,34 +95,30 @@ class Suihke {
         poistettavat.clear();
     }
 
-
-
-
-
 }
 
 
 class Hiukkanen {
     float x, y, x_nopeus, y_nopeus;
-    int elinAika;
+    int elin_aika;
     color vari;
 
-    Hiukkanen(float x, float y, float x_nopeus, float y_nopeus, color vari) {
+    Hiukkanen(float x, float y, float x_nopeus, float y_nopeus, color vari, int elin_aika) {
         this.x = x;
         this.y = y;
         this.x_nopeus = x_nopeus;
         this.y_nopeus = y_nopeus;
         this.vari = vari;
-        elinAika = 50+int(randomGaussian()*5);
+        this.elin_aika = elin_aika+int(randomGaussian()*5);
     }
 
-    private void piirra() {
+    void piirra() {
         fill(vari);
         stroke(vari);
         ellipse(x,y,10,10);
         x += x_nopeus;
         y += y_nopeus;
-        elinAika--;
+        elin_aika--;
     }
 
 

@@ -1,7 +1,7 @@
 Suihke s;
 
 void setup() {
-    size(1000,800);
+    size(1000,800,P2D);
     s = new Suihke(50, 50, 0, -1);
 }
 
