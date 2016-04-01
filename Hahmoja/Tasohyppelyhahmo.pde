@@ -317,13 +317,11 @@ class Tasohyppelyhahmo {
   }
 
   void liiku_oikealle() {
-    println(seuraava_oikea_seina());
     x = constrain(x+liikutus_nopeus, 0, seuraava_oikea_seina()-kuva.width);
     viimeksi_vasemmalle = false;
   }
 
   void liiku_vasemmalle() {
-    println(seuraava_vasen_seina());
     x = constrain(x-liikutus_nopeus, seuraava_vasen_seina(), maailman_leveys-kuva.width);
     viimeksi_vasemmalle = true;
   }
