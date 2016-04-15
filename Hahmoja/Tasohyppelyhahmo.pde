@@ -1,4 +1,4 @@
-/* Tommi Oinonen 2016 - versio 2.6
+/* Tommi Oinonen 2016 - versio 2.7
  * 2D-tasohyppelypelin hahmoihin ja tasoihin tarvittava koodi.
  * Kopioi tämä koko tiedosto projektiisi niin voit käyttää
  * hahmoja pelissäsi.
@@ -97,6 +97,7 @@ class Seina {
   float x, y;
   float korkeus;
   color vari = color(0, 0, 0);
+  private boolean olemassa = true;
 
   Seina(float x, float y, float korkeus) {
     this.x = x;
@@ -122,6 +123,24 @@ class Seina {
     return false;
   }
 
+  void poista() {
+    if (olemassa) {
+      seinat.remove(this);
+      seinatJarjestyksessa = new ArrayList<Seina>(seinat);
+      Collections.sort(seinatJarjestyksessa, new SeinaVertailija());
+      olemassa = false;
+    }
+  }
+
+  void palauta() {
+    if (!olemassa) {
+      seinat.add(this);
+      seinatJarjestyksessa = new ArrayList<Seina>(seinat);
+      Collections.sort(seinatJarjestyksessa, new SeinaVertailija());
+      olemassa = true;
+    }
+  }
+
 }
 
 // Taso, jonka päällä hahmot voivat hyppiä
@@ -129,6 +148,7 @@ class Taso {
   float x, y;
   float pituus;
   color vari = color(0, 0, 0);
+  private boolean olemassa = true;
 
   Taso(float x, float korkeus, float pituus) {
     this.x = x;
@@ -141,6 +161,26 @@ class Taso {
       alusta_koordinaatisto();
     }
   }
+
+  void poista() {
+    if (olemassa) {
+      tasot.remove(this);
+      tasotKorkeudenMukaan = new ArrayList<Taso>(tasot);
+      Collections.sort(tasotKorkeudenMukaan, new TasoKorkeusVertailija());
+      olemassa = false;
+    }
+  }
+
+  void palauta() {
+    if (!olemassa) {
+      tasot.add(this);
+      tasotKorkeudenMukaan = new ArrayList<Taso>(tasot);
+      Collections.sort(tasotKorkeudenMukaan, new TasoKorkeusVertailija());
+      olemassa = true;
+    }
+
+  }
+
 
   void aseta_vari(int pun, int vih, int sin) {
     this.vari = color(pun, vih, sin);
@@ -287,6 +327,7 @@ class Tasohyppelyhahmo {
     popMatrix();
   }
 
+
   float seuraava_oikea_seina() {
     float oikea_seina = maailman_leveys;
     for (int i=seinat.size()-1; i>=0; i--) {
@@ -297,7 +338,6 @@ class Tasohyppelyhahmo {
       if (s.kohdalla(this)) {
         oikea_seina = s.x;
       }
-
     }
     return oikea_seina;
   }
@@ -363,6 +403,7 @@ class Tasohyppelyhahmo {
       y_nopeus = 0;
     }
     y = constrain(y+y_nopeus, lattia, katto+kuva.height);
+    x = constrain(x, seuraava_vasen_seina(), seuraava_oikea_seina()+kuva.width);
   }
 
   public float seuraava_katto() {
