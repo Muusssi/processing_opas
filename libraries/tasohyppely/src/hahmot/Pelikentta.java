@@ -3,10 +3,11 @@ package hahmot;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import processing.core.PImage;
 
 public class Pelikentta {
-    
+
     protected Tasohyppelyhahmo aktiivinen_hahmo = null;
 
     protected static PApplet papplet;
@@ -23,15 +24,19 @@ public class Pelikentta {
 
     protected ArrayList<Taso> tasot = new ArrayList<Taso>();
     protected ArrayList<Taso> tasotKorkeudenMukaan = new ArrayList<Taso>();
+    protected PGraphics taso_kerros;
 
     protected ArrayList<Seina> seinat = new ArrayList<Seina>();
     protected ArrayList<Seina> seinatJarjestyksessa = new ArrayList<Seina>();
+    protected PGraphics seina_kerros;
 
     public Pelikentta(PApplet papplet, int maailman_leveys, int maailman_korkeus) {
         Pelikentta.papplet = papplet;
         alusta_koordinaatisto();
         this.maailman_leveys = maailman_leveys;
         this.maailman_korkeus = maailman_korkeus;
+        this.taso_kerros = papplet.createGraphics(maailman_leveys, maailman_korkeus);
+        this.seina_kerros = papplet.createGraphics(maailman_leveys, maailman_korkeus);
     }
 
     public Pelikentta(PApplet papplet, PImage tausta_kuva) {
@@ -41,9 +46,9 @@ public class Pelikentta {
         this.maailman_korkeus = tausta_kuva.height;
         tausta = tausta_kuva;
      }
-    
+
     protected void varmista_kamera() {
-        if (papplet.frameCount > kamera_asetettu_viimeksi) {
+        if (papplet.frameCount != kamera_asetettu_viimeksi) {
             kamera_asetettu_viimeksi = papplet.frameCount;
             aktiivinen_hahmo.seuraa_kameralla();
         }
@@ -70,31 +75,46 @@ public class Pelikentta {
     public Tasohyppelyhahmo luo_tasohyppelyhahmo(PImage kuva) {
         return new Tasohyppelyhahmo(kuva, this);
     }
-    
+
     public void piirra_tausta() {
         if (this.tausta != null) {
             papplet.pushMatrix();
             papplet.image(tausta, kameran_siirto_x, -kameran_siirto_y+papplet.height-tausta.height);
             papplet.popMatrix();
         }
+        varmista_kamera();
     }
 
     public Taso luo_taso(float x, float korkeus, float pituus) {
         return new Taso(x, korkeus, pituus, this);
     }
 
+    protected void paivita_taso_kerros() {
+        taso_kerros = papplet.createGraphics(maailman_leveys, maailman_korkeus);
+        taso_kerros.beginDraw();
+        for (int i=0; i<tasot.size(); i++) {
+            tasot.get(i).piirra();
+        }
+        taso_kerros.endDraw();
+
+    }
+
     public void piirra_tasot() {
-        this.varmista_kamera();
-        for (int i = 0; i < tasot.size(); i++) {
-            Taso t = tasotKorkeudenMukaan.get(i);
-            if (t.y > papplet.height - kameran_siirto_y) {
-                return;
-            } else if (t.y > -kameran_siirto_y) {
-                if (t.x + t.pituus > -kameran_siirto_x && t.x < papplet.width - kameran_siirto_x)
-                    t.piirra();
-            }
+        varmista_kamera();
+        if (this.taso_kerros != null) {
+            papplet.image(this.taso_kerros, 0, 0);
         }
     }
+
+    protected void paivita_seina_kerros() {
+        seina_kerros = papplet.createGraphics(maailman_leveys, maailman_korkeus);
+        seina_kerros.beginDraw();
+        for (int i=0; i<seinat.size(); i++) {
+            seinat.get(i).piirra();
+        }
+        seina_kerros.endDraw();
+    }
+
 
     public Seina luo_seina(float x, float y, float korkeus) {
         return new Seina(x, y, korkeus, this);
@@ -102,14 +122,8 @@ public class Pelikentta {
 
     public void piirra_seinat() {
         this.varmista_kamera();
-        for (int i = 0; i < seinat.size(); i++) {
-            Seina s = seinatJarjestyksessa.get(i);
-            if (s.x > papplet.width - kameran_siirto_x) {
-                return;
-            } else if (s.x > -kameran_siirto_x) {
-                if (s.y + s.korkeus > -kameran_siirto_y && s.y < papplet.height - kameran_siirto_y)
-                    s.piirra();
-            }
+        if (this.seina_kerros != null) {
+            papplet.image(seina_kerros, 0, 0);
         }
     }
 

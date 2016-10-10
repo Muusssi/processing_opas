@@ -9,7 +9,7 @@ public class Taso {
 
     float x, y;
     float pituus;
-    // color vari = color(0, 0, 0);
+    int paksuus = 3;
     private boolean olemassa = true;
     public Pelikentta peli_kentta;
 
@@ -21,6 +21,8 @@ public class Taso {
         peli_kentta.tasot.add(this);
         peli_kentta.tasotKorkeudenMukaan = new ArrayList<Taso>(peli_kentta.tasot);
         Collections.sort(peli_kentta.tasotKorkeudenMukaan, new TasoKorkeusVertailija());
+        peli_kentta.paivita_taso_kerros();
+
     }
 
     public void poista() {
@@ -29,6 +31,7 @@ public class Taso {
             peli_kentta.tasotKorkeudenMukaan = new ArrayList<Taso>(peli_kentta.tasot);
             Collections.sort(peli_kentta.tasotKorkeudenMukaan, new TasoKorkeusVertailija());
             olemassa = false;
+            peli_kentta.paivita_taso_kerros();
         }
     }
 
@@ -38,21 +41,18 @@ public class Taso {
             peli_kentta.tasotKorkeudenMukaan = new ArrayList<Taso>(peli_kentta.tasot);
             Collections.sort(peli_kentta.tasotKorkeudenMukaan, new TasoKorkeusVertailija());
             olemassa = true;
+            peli_kentta.paivita_taso_kerros();
         }
     }
 
-    // void aseta_vari(int pun, int vih, int sin) {
-    // this.vari = color(pun, vih, sin);
-    // }
-
     protected void piirra() {
         // Peli.papplet.stroke(this.vari);
-        Pelikentta.papplet.line(x, y, x + pituus, y);
+        peli_kentta.taso_kerros.strokeWeight(paksuus);
+        peli_kentta.taso_kerros.line(x, y, x + pituus, y);
     }
 
     public boolean onko_kohdalla(Tasohyppelyhahmo hahmo) {
-        // Hahmo on tason kohdalla eli törmää tasoon pystysuunnassa jos
-        // vähintään
+        // Hahmo on tason kohdalla eli törmää tasoon pystysuunnassa jos vähintään
         // puolet hamon leveydestä on tason päällä.
         if (hahmo.x + hahmo.kuva.width / 2 >= this.x && hahmo.x + hahmo.kuva.width / 2 <= this.x + this.pituus) {
             return true;
@@ -74,7 +74,7 @@ public class Taso {
         return false;
     }
 
-    public class TasoKorkeusVertailija implements Comparator<Taso> {
+    private class TasoKorkeusVertailija implements Comparator<Taso> {
         @Override
         public int compare(Taso t1, Taso t2) {
             if (t1.y < t2.y)

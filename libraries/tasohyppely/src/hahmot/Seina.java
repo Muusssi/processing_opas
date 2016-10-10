@@ -8,6 +8,7 @@ public class Seina {
 
     float x, y;
     float korkeus;
+    int paksuus = 3;
     private boolean olemassa = true;
     public Pelikentta peli_kentta;
 
@@ -19,10 +20,12 @@ public class Seina {
         peli_kentta.seinat.add(this);
         peli_kentta.seinatJarjestyksessa = new ArrayList<Seina>(peli_kentta.seinat);
         Collections.sort(peli_kentta.seinatJarjestyksessa, new SeinaVertailija());
+        peli_kentta.paivita_seina_kerros();
     }
 
     protected void piirra() {
-        Pelikentta.papplet.line(x, y, x, y + korkeus);
+        peli_kentta.seina_kerros.strokeWeight(paksuus);
+        peli_kentta.seina_kerros.line(x, y, x, y + korkeus);
     }
 
     public boolean kohdalla(Tasohyppelyhahmo hahmo) {
@@ -38,6 +41,7 @@ public class Seina {
             peli_kentta.seinatJarjestyksessa = new ArrayList<Seina>(peli_kentta.seinat);
             Collections.sort(peli_kentta.seinatJarjestyksessa, new SeinaVertailija());
             olemassa = false;
+            peli_kentta.paivita_seina_kerros();
         }
     }
 
@@ -47,6 +51,7 @@ public class Seina {
             peli_kentta.seinatJarjestyksessa = new ArrayList<Seina>(peli_kentta.seinat);
             Collections.sort(peli_kentta.seinatJarjestyksessa, new SeinaVertailija());
             olemassa = true;
+            peli_kentta.paivita_seina_kerros();
         }
     }
 
