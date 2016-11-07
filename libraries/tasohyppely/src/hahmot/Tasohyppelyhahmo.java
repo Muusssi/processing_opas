@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Tasohyppelyhahmo {
-    
+
     public float x = 0;
     public float y = 0;
     public PImage kuva;
@@ -15,7 +15,10 @@ public class Tasohyppelyhahmo {
     public boolean viimeksi_vasemmalle = false;
 
     private boolean kaksoishyppy = false;
+    public boolean osaa_kaksois_hypyn = true;
     public Pelikentta pelikentta;
+
+    private float hitbox_x1, hitbox_x2, hitbox_y1, hitbox_y2;
 
     public Tasohyppelyhahmo(PImage kuva, Pelikentta pelikentta) {
         this.kuva = kuva;
@@ -23,8 +26,12 @@ public class Tasohyppelyhahmo {
         if (pelikentta.aktiivinen_hahmo == null) {
             pelikentta.aktiivinen_hahmo = this;
         }
+        this.hitbox_x1 = 0;
+        this.hitbox_x2 = this.kuva.width;
+        this.hitbox_y1 = 0;
+        this.hitbox_y2 = this.kuva.height;
     }
-    
+
     public void ala_seurata_kameralla() {
         pelikentta.aktiivinen_hahmo = this;
     }
@@ -130,7 +137,9 @@ public class Tasohyppelyhahmo {
             y_nopeus = hyppynopeus;
             kaksoishyppy = false;
         } else if (!kaksoishyppy) {
-            y_nopeus = hyppynopeus;
+           if (osaa_kaksois_hypyn) {
+               y_nopeus = hyppynopeus;
+           }
             kaksoishyppy = true;
         }
     }
@@ -212,7 +221,6 @@ public class Tasohyppelyhahmo {
         } else if (y <= -pelikentta.kameran_siirto_y) {
             kameran_liikutus_nopeus_y = Pelikentta.papplet.height / 8;
         } else if (y >= Pelikentta.papplet.height + pelikentta.kameran_siirto_y) {
-            // else if (y > 0) {
             kameran_liikutus_nopeus_y = -Pelikentta.papplet.height / 8;
         }
         if ((y + pelikentta.kameran_siirto_y > 2 * Pelikentta.papplet.height / 3 && y_nopeus >= 0)
