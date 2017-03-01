@@ -7,11 +7,9 @@ import java.util.Comparator;
 //Taso, jonka päällä hahmot voivat hyppiä
 public class Taso {
 
-    protected static int oletus_paksuus = 3;
-
     float x, y;
     float pituus;
-    protected int paksuus;
+    int paksuus = 3;
     private boolean olemassa = true;
     public Pelikentta peli_kentta;
 
@@ -19,16 +17,12 @@ public class Taso {
         this.x = x;
         this.y = korkeus;
         this.pituus = pituus;
-        this.paksuus = oletus_paksuus;
         this.peli_kentta = kentta;
         peli_kentta.tasot.add(this);
         peli_kentta.tasotKorkeudenMukaan = new ArrayList<Taso>(peli_kentta.tasot);
         Collections.sort(peli_kentta.tasotKorkeudenMukaan, new TasoKorkeusVertailija());
         peli_kentta.paivita_taso_kerros();
-    }
 
-    public static void oletus_pakuus(int paksuus) {
-        oletus_paksuus = paksuus;
     }
 
     public void poista() {
@@ -37,7 +31,7 @@ public class Taso {
             peli_kentta.tasotKorkeudenMukaan = new ArrayList<Taso>(peli_kentta.tasot);
             Collections.sort(peli_kentta.tasotKorkeudenMukaan, new TasoKorkeusVertailija());
             olemassa = false;
-            peli_kentta.tasokerros_vanhentunut = true;
+            peli_kentta.paivita_taso_kerros();
         }
     }
 
@@ -47,11 +41,12 @@ public class Taso {
             peli_kentta.tasotKorkeudenMukaan = new ArrayList<Taso>(peli_kentta.tasot);
             Collections.sort(peli_kentta.tasotKorkeudenMukaan, new TasoKorkeusVertailija());
             olemassa = true;
-            peli_kentta.tasokerros_vanhentunut = true;
+            peli_kentta.paivita_taso_kerros();
         }
     }
 
     protected void piirra() {
+        // Peli.papplet.stroke(this.vari);
         peli_kentta.taso_kerros.strokeWeight(paksuus);
         peli_kentta.taso_kerros.line(x, y, x + pituus, y);
     }

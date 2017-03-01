@@ -11,29 +11,28 @@ public class Pelikentta {
     protected Tasohyppelyhahmo aktiivinen_hahmo = null;
 
     protected static PApplet papplet;
-    protected static boolean koordinaatisto_alustettu = false;
+    public static boolean koordinaatisto_alustettu = false;
 
-    protected PImage tausta;
+    public PImage tausta;
 
     public int maailman_leveys;
     public int maailman_korkeus;
 
-    protected float kameran_siirto_x = 0;
-    protected float kameran_siirto_y = 0;
+    public float kameran_siirto_x = 0;
+    public float kameran_siirto_y = 0;
     private int kamera_asetettu_viimeksi = 0;
 
     protected ArrayList<Taso> tasot = new ArrayList<Taso>();
     protected ArrayList<Taso> tasotKorkeudenMukaan = new ArrayList<Taso>();
     protected PGraphics taso_kerros;
-    protected boolean tasokerros_vanhentunut = true;
 
     protected ArrayList<Seina> seinat = new ArrayList<Seina>();
     protected ArrayList<Seina> seinatJarjestyksessa = new ArrayList<Seina>();
     protected PGraphics seina_kerros;
-    protected boolean seinakerros_vanhentunut = true;
 
     public Pelikentta(PApplet papplet, int maailman_leveys, int maailman_korkeus) {
         Pelikentta.papplet = papplet;
+        alusta_koordinaatisto();
         this.maailman_leveys = maailman_leveys;
         this.maailman_korkeus = maailman_korkeus;
         this.taso_kerros = papplet.createGraphics(maailman_leveys, maailman_korkeus);
@@ -42,24 +41,20 @@ public class Pelikentta {
 
     public Pelikentta(PApplet papplet, PImage tausta_kuva) {
         Pelikentta.papplet = papplet;
+        alusta_koordinaatisto();
         this.maailman_leveys = tausta_kuva.width;
         this.maailman_korkeus = tausta_kuva.height;
         tausta = tausta_kuva;
      }
 
-    protected void varmista_kamera() {
-        alusta_koordinaatisto();
+    public void varmista_kamera() {
         if (papplet.frameCount != kamera_asetettu_viimeksi) {
             kamera_asetettu_viimeksi = papplet.frameCount;
-            if (aktiivinen_hahmo != null) {
-                aktiivinen_hahmo.seuraa_kameralla();
-            }
-            this.paivita_seina_kerros();
-            this.paivita_taso_kerros();
+            aktiivinen_hahmo.seuraa_kameralla();
         }
     }
 
-    private static void alusta_koordinaatisto() {
+    public static void alusta_koordinaatisto() {
         if (!koordinaatisto_alustettu) {
             papplet.pushMatrix();
             papplet.translate(0, papplet.height + 0);
@@ -68,13 +63,6 @@ public class Pelikentta {
             koordinaatisto_alustettu = true;
         }
     }
-
-    public void piirra_naytolle() {
-        koordinaatisto_alustettu = false;
-        papplet.popMatrix();
-        papplet.popMatrix();
-    }
-
 
     public float mouse_x() {
         return papplet.mouseX - kameran_siirto_x;
@@ -89,6 +77,9 @@ public class Pelikentta {
     }
 
     public void piirra_tausta() {
+//        if (!koordinaatisto_alustettu) {
+//            Pelikentta.alusta_koordinaatisto();
+//        }
         if (this.tausta != null) {
             papplet.pushMatrix();
             papplet.image(tausta, kameran_siirto_x, -kameran_siirto_y+papplet.height-tausta.height);
@@ -101,16 +92,14 @@ public class Pelikentta {
         return new Taso(x, korkeus, pituus, this);
     }
 
-    protected void paivita_taso_kerros() {
-        if (tasokerros_vanhentunut) {
-            taso_kerros = papplet.createGraphics(maailman_leveys, maailman_korkeus);
-            taso_kerros.beginDraw();
-            for (int i=0; i<tasot.size(); i++) {
-                tasot.get(i).piirra();
-            }
-            taso_kerros.endDraw();
-            tasokerros_vanhentunut = true;
+    public void paivita_taso_kerros() {
+        taso_kerros = papplet.createGraphics(maailman_leveys, maailman_korkeus);
+        taso_kerros.beginDraw();
+        for (int i=0; i<tasot.size(); i++) {
+            tasot.get(i).piirra();
         }
+        taso_kerros.endDraw();
+
     }
 
     public void piirra_tasot() {
@@ -120,16 +109,13 @@ public class Pelikentta {
         }
     }
 
-    protected void paivita_seina_kerros() {
-        if (seinakerros_vanhentunut) {
-            seina_kerros = papplet.createGraphics(maailman_leveys, maailman_korkeus);
-            seina_kerros.beginDraw();
-            for (int i=0; i<seinat.size(); i++) {
-                seinat.get(i).piirra();
-            }
-            seina_kerros.endDraw();
-            seinakerros_vanhentunut = false;
+    public void paivita_seina_kerros() {
+        seina_kerros = papplet.createGraphics(maailman_leveys, maailman_korkeus);
+        seina_kerros.beginDraw();
+        for (int i=0; i<seinat.size(); i++) {
+            seinat.get(i).piirra();
         }
+        seina_kerros.endDraw();
     }
 
 
@@ -142,6 +128,12 @@ public class Pelikentta {
         if (this.seina_kerros != null) {
             papplet.image(seina_kerros, 0, 0);
         }
+    }
+
+    public void piirra_naytolle() {
+        papplet.popMatrix();
+        papplet.popMatrix();
+        koordinaatisto_alustettu = false;
     }
 
 }

@@ -14,11 +14,8 @@ public class Tasohyppelyhahmo {
     public float hyppynopeus = 8;
     public boolean viimeksi_vasemmalle = false;
 
-    private boolean kaksoishyppy = false;
-    public boolean osaa_kaksois_hypyn = true;
+    public boolean kaksoishyppy = false;
     public Pelikentta pelikentta;
-
-    private float hitbox_x1, hitbox_x2, hitbox_y1, hitbox_y2;
 
     public Tasohyppelyhahmo(PImage kuva, Pelikentta pelikentta) {
         this.kuva = kuva;
@@ -26,10 +23,6 @@ public class Tasohyppelyhahmo {
         if (pelikentta.aktiivinen_hahmo == null) {
             pelikentta.aktiivinen_hahmo = this;
         }
-        this.hitbox_x1 = 0;
-        this.hitbox_x2 = this.kuva.width;
-        this.hitbox_y1 = 0;
-        this.hitbox_y2 = this.kuva.height;
     }
 
     public void ala_seurata_kameralla() {
@@ -94,7 +87,7 @@ public class Tasohyppelyhahmo {
         Pelikentta.papplet.popMatrix();
     }
 
-    private float seuraava_oikea_seina() {
+    public float seuraava_oikea_seina() {
         float oikea_seina = pelikentta.maailman_leveys;
         for (int i = pelikentta.seinat.size() - 1; i >= 0; i--) {
             Seina s = pelikentta.seinatJarjestyksessa.get(i);
@@ -108,7 +101,7 @@ public class Tasohyppelyhahmo {
         return oikea_seina;
     }
 
-    private float seuraava_vasen_seina() {
+    public float seuraava_vasen_seina() {
         float vasen_seina = 0;
         for (int i = 0; i < pelikentta.seinat.size(); i++) {
             Seina s = pelikentta.seinatJarjestyksessa.get(i);
@@ -137,9 +130,7 @@ public class Tasohyppelyhahmo {
             y_nopeus = hyppynopeus;
             kaksoishyppy = false;
         } else if (!kaksoishyppy) {
-           if (osaa_kaksois_hypyn) {
-               y_nopeus = hyppynopeus;
-           }
+            y_nopeus = hyppynopeus;
             kaksoishyppy = true;
         }
     }
@@ -155,7 +146,7 @@ public class Tasohyppelyhahmo {
         }
     }
 
-    private void tipu() {
+    public void tipu() {
         float lattia = seuraava_lattia();
         float katto = seuraava_katto();
 
@@ -171,7 +162,7 @@ public class Tasohyppelyhahmo {
         x = PApplet.constrain(x, seuraava_vasen_seina(), seuraava_oikea_seina() + kuva.width);
     }
 
-    private float seuraava_katto() {
+    public float seuraava_katto() {
         float katto = pelikentta.maailman_korkeus;
         for (int i = pelikentta.tasotKorkeudenMukaan.size() - 1; i >= 0; i--) {
             Taso taso = pelikentta.tasotKorkeudenMukaan.get(i);
@@ -185,7 +176,7 @@ public class Tasohyppelyhahmo {
         return katto;
     }
 
-    private float seuraava_lattia() {
+    public float seuraava_lattia() {
         float lattia = 0;
         for (int i = 0; i < pelikentta.tasotKorkeudenMukaan.size(); i++) {
             Taso taso = pelikentta.tasotKorkeudenMukaan.get(i);
@@ -203,7 +194,7 @@ public class Tasohyppelyhahmo {
         pelikentta.kameran_siirto_y = PApplet.constrain(-y + Pelikentta.papplet.height / 2, -pelikentta.maailman_korkeus + Pelikentta.papplet.height, 0);
     }
 
-    protected void seuraa_kameralla() {
+    public void seuraa_kameralla() {
         float kameran_liikutus_nopeus_x = liikutus_nopeus;
         float kameran_liikutus_nopeus_y = liikutus_nopeus;
 
@@ -221,12 +212,16 @@ public class Tasohyppelyhahmo {
         } else if (y <= -pelikentta.kameran_siirto_y) {
             kameran_liikutus_nopeus_y = Pelikentta.papplet.height / 8;
         } else if (y >= Pelikentta.papplet.height + pelikentta.kameran_siirto_y) {
+            // else if (y > 0) {
             kameran_liikutus_nopeus_y = -Pelikentta.papplet.height / 8;
         }
         if ((y + pelikentta.kameran_siirto_y > 2 * Pelikentta.papplet.height / 3 && y_nopeus >= 0)
                 || (y + pelikentta.kameran_siirto_y < 2 * Pelikentta.papplet.height / 5 && y_nopeus <= 0)) {
             pelikentta.kameran_siirto_y = PApplet
                     .constrain(pelikentta.kameran_siirto_y + kameran_liikutus_nopeus_y, -pelikentta.maailman_korkeus + Pelikentta.papplet.height, 0);
+        }
+        if (!Pelikentta.koordinaatisto_alustettu) {
+            Pelikentta.alusta_koordinaatisto();
         }
         Pelikentta.papplet.popMatrix();
         Pelikentta.papplet.pushMatrix();
