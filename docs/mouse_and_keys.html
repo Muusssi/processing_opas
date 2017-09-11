@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Processing-opas | Hiiri ja napit </title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+  <h1>Hiiri ja napit</h1>
+  <a href="/index.html">Etusivulle</a>
+
+<p>Ohjelmien ohjaamiseen käytetään yleensä hiirtä ja näppäimistöä. Kun halutaan tietää mihin käyttäjän hiiri osoittaa tai mitä painiketta on painettu voidaan käyttää näitä komentoja. Näitä komentoja voi käyttää vain ohjelmissa, joissa on <code>void setup() {}</code> ja <code>void draw() {}</code> funktiot.</p>
+
+<h1>Hiiri</h1>
+
+<h3>mouseX ja mouseY</h3>
+<p>mouseX ja mouseY -muuttujissa on tallessa kursorin (eli hiiren osoittimen) sen hetkiset koordinaatit.</p>
+<p>Esim. seuraava ohjelma piirtää piirtoikkunan keskelle ellipsejä, joiden korkeus riippuu kursorin etäisyydesta yläreunasta ja leveys korsorin etäisyydesta ikkunan vasemmasta reunasta.</p>
+<pre><code>void setup() {
+  size(400,400);
+}
+
+void draw() {
+  ellipse(width/2, height/2, mouseX, mouseY);
+}</code></pre>
+
+<h3>mousePressed</h3>
+<p><code>mousePressed</code>-muuttujassa on tallessa tieto siitä onko, hiiren painike painettuna.</p>
+<p>Esim. seuraava ohjelma maalaa ruudun vihreäksi jos hiiren painiketta ei ole painettu ja harmaaksi jos jokin nappi on painettu.</p>
+<pre><code>void setup() {
+  size(400,400);
+}
+
+void draw() {
+  if (mousePressed) {
+    background(0,200,0);
+  }
+  else {
+    background(200);
+  }
+}</code></pre>
+
+
+<h3>void mousePressed() {}</h3>
+<p><code>mousePressed() {}</code>-funktio ajetaan aina kun jotakin hiiren painiketta painetaan.</p>
+<p>Esim. seuraava ohjelma piirtää ympyrän ruudun keskelle ja jokaisella napin painalluksella kasvattaa ympyrän kokoa.</p>
+<pre><code>int ympyran_koko = 1;
+void setup() {
+  size(400,400);
+}
+
+void draw() {
+  ellipse(width/2, height/2, ympyran_koko, ympyran_koko);
+}
+
+void mousePressed() {
+  // Kasvatetaan ympyrän kokoa yhdellä
+  ympyran_koko++;
+}</code></pre>
+
+
+
+<h1>Näppäimistö</h1>
+
+<h3>keyPressed</h3>
+<p><code>keyPressed</code>-muuttujassa on tallessa tieto siitä onko, jokin nappi painettuna.</p>
+<p>Esim. seuraava ohjelma maalaa ruudun vihreäksi jos mitään nappia ei ole painettu ja harmaaksi jos jokin nappi on painettu.</p>
+<pre><code>void setup() {
+  size(400,400);
+}
+
+void draw() {
+  if (keyPressed) {
+    background(0,200,0);
+  }
+  else {
+    background(200);
+  }
+}</code></pre>
+
+<h3>void keyPressed() {}</h3>
+<p><code>keyPressed() {}</code>-funktio ajetaan aina kun jotakin painiketta painetaan.</p>
+<p>Esim. seuraava ohjelma piirtää ympyrän ruudun keskelle ja jokaisella napin painalluksella kasvattaa ympyrän kokoa.</p>
+<pre><code>int ympyran_koko = 1;
+void setup() {
+  size(400,400);
+}
+
+void draw() {
+  ellipse(width/2, height/2, ympyran_koko, ympyran_koko);
+}
+
+void keyPressed() {
+  // Kasvatetaan ympyrän kokoa yhdellä
+  ympyran_koko++;
+}</code></pre>
+
+<h3>keyCode</h3>
+<p><code>keyCode</code>-muuttujassa on tallessa painetun painikkeen numero. Tämän avulla voi selvittää mitä painiketta on painettu. Painikkeiden numerot saattavat vaihdella eri näppäimistöjen välillä, joten tätä esimerkki ohjelmaa voi käyttää tarkistamaan mikä on kunkin painikkeen numero.</p>
+<p>Seuraava ohjelma kiroittaa painetun painikkeen numeron ikkunan keskelle aina kun jotain painiketta on painettu.</p>
+<pre><code>void setup() {
+  textSize(30);
+}
+
+void draw() {}
+
+void keyPressed() {
+  background(200);
+  text(keyCode, width/4, height/2);
+}</code></pre>
+
+
+</body>
+</html>

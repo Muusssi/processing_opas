@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Processing-opas | Piirtokomennot</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+
+<h1>Piirtokomennot</h1>
+<a href="/index.html">Etusivulle</a>
+<ul>
+  <li><a href="#size">size()</a></li>
+  <li><a href="#line">line()</a></li>
+  <li><a href="#ellipse">ellipse()</a></li>
+  <li><a href="#rect">rect()</a></li>
+  <li><a href="#fill">fill()</a></li>
+  <li><a href="#background">background()</a></li>
+  <li><a href="#stroke">stroke()</a></li>
+  <li><a href="#strokeWeight">stroke()</a></li>
+</ul>
+
+<a name="size"></a>
+<h2>size(leveys, korkeus);</h2>
+<p>Jokainen processing ohjelma käynnistyy omassa ikkunassaan, joka on automaattisesti 100 pikseliä leveä ja 100 pikseliä korkea.
+size-funktiolla voi kuitenkin määrittää ikkunan koon eli sen leveyden ja korkeuden pikseleinä.</p>
+<p>Esim. seuraava ohjelma luo 400 pikseliä leveän ja 500 pikseliä korkean ikkunan:</p>
+<pre><code>size(400,500);</code></pre>
+
+<a name="line"></a>
+<h2>line(alkupisteX, alkupisteY, loppupisteX, loppupisteY);</h2>
+<p>line-funktio piirtää viivan kahden annetun pisteen välille.</p>
+<p>Esim. seurava ohjelma piirtää ikkunaan päättömän tikku-ukon</p>
+<pre><code>size(300, 400);
+line(50, 50, 150, 125);    // vasen käsi
+line(250, 50, 150, 125);   // oikea käsi
+line(150, 100, 150, 250);  // varatalo
+line(150, 250, 75, 350);   // vasen jalka
+line(150, 250, 225, 350);  // oikea jalka
+</code></pre>
+
+<a name="ellipse"></a>
+<h2>ellipse(keskusX, keskusY, leveys, korkeus);</h2>
+<p>ellipse-funktio piirtää ellipsin, jonka keskipiste on annetussa paikassa. Leveys ja korkeus määräävät ellipsin muodon. Jos leveys ja korkeus ovat samat, kyseessä on ympyrä.</p>
+<p>Esim. seurava ohjelma piirtää ikkunaan yksinkertaiset kasvot</p>
+<pre><code>size(200, 200);
+ellipse(100, 100, 150, 150); // pää
+ellipse(75, 75, 40, 30);     // vasen silmä
+ellipse(125, 75, 40, 30);    // oikea silmä
+ellipse(100, 130, 80, 30);   // suu
+</code></pre>
+
+
+<a name="rect"></a>
+<h2>rect(kulmaX, kulmaY, leveys, korkeus);</h2>
+<p>rect-functio piirtää nelikulmion, jonka vasen yläkulma on annetussa pisteessä. Leveys ja korkeus määrittävät nelikulmion koon ja muodon.</p>
+<p>Esim. seuraava ohjelma piirtää kerrostalon</p>
+<pre><code>size(400, 500);
+rect(50, 50, 200, 300); // Rakennus
+// Ylimmän kerroksen ikkunoita
+rect(80, 70, 30, 40);
+rect(80+50, 70, 30, 40);
+rect(80+100, 70, 30, 40);
+// Toisen kerroksen ikkunoita
+rect(80, 170, 30, 40);
+rect(80+50, 170, 30, 40);
+rect(80+100, 170, 30, 40);
+// Alimman kerroksen ikkunoita
+rect(80, 270, 30, 40);
+rect(80+50, 270, 30, 40);
+// Ovi
+rect(190, 290, 30, 60);
+</code></pre>
+
+<a name="fill"></a>
+<h2>fill(harmaanSävy); TAI fill(punainen, vihreä, sininen);</h2>
+<p>fill-funktio asettaa kuvioiden täyttö värin. Värit annetaan numeroina välillä 0-255. 0 tarkoittaa ei lainkaan väriä (eli mustaa) ja 255 tarkoittaa valkoista. Jos annetaan vain yksi väri arvo niin värit ovat harmaan sävyjä. Väri voidaan antaa myös punaisen, vihreän ja sinisen sekoituksena.</p>
+<p>Esim. seurava ohjelma piirtää ikkunaan eri väreillä täytettyjä ympyröitä.</p>
+<pre><code>size(400, 400);
+// Ensimmäinen rivi
+fill(0);              // Musta
+ellipse(50, 40, 40, 40);
+fill(100);            // Tumman harmaa
+ellipse(100, 40, 40, 40);
+fill(200);            // Vaalean harmaa
+ellipse(150, 40, 40, 40);
+fill(255);            // Valkoinen
+ellipse(200, 40, 40, 40);
+// Kolmella värillä
+fill(0, 0, 0);          // Musta
+ellipse(250, 40, 40, 40);
+fill(100, 100, 100);    // Harmaa
+ellipse(300, 40, 40, 40);
+fill(255, 255, 255);    // Valkoinen
+ellipse(350, 40, 40, 40);
+
+// toinen rivi
+// punainen
+fill(255, 0, 0);
+ellipse(50, 100, 40, 40);
+fill(200, 0, 0);
+ellipse(100, 100, 40, 40);
+fill(100, 0, 0);
+ellipse(150, 100, 40, 40);
+
+// Vihreä
+fill(0, 255, 0);
+ellipse(50, 150, 40, 40);
+fill(0, 200, 0);
+ellipse(100, 150, 40, 40);
+fill(0, 100, 0);
+ellipse(150, 150, 40, 40);
+
+// Sininen
+fill(0, 0, 255);
+ellipse(50, 200, 40, 40);
+fill(0, 0, 200);
+ellipse(100, 200, 40, 40);
+fill(0, 0, 100);
+ellipse(150, 200, 40, 40);
+
+// Väri sekoituksia
+fill(255, 255, 0);   //Keltainen
+ellipse(50, 250, 40, 40);
+fill(255, 100, 0);   // Oranssi
+ellipse(100, 250, 40, 40);
+fill(150, 0, 100);   //Violetti
+ellipse(150, 250, 40, 40);</code></pre>
+
+
+<a name="background"></a>
+<h2>background(harmaanSävy); TAI background(punainen, vihreä, sininen);</h2>
+<p>background-funktio asettaa taustavärin. Värit annetaan numeroina välillä 0-255. Katso lisää väreistä kohdasta <a href="#fill">fill</a>.</p>
+<p>Esim. seuraava ohjelma värittää taustavärin vaalean siniseksi.</p>
+<pre><code>
+size(200, 200);
+background(150, 200, 255);
+</code></pre>
+
+<a name="stroke"></a>
+<h2>stroke(harmaanSävy); TAI stroke(punainen, vihreä, sininen);</h2>
+<p>stroke-funktio asettaa piirtovärin eli niin sanotusti 'kynän värin'. Värit annetaan numeroina välillä 0-255. Katso lisää väreistä kohdasta <a href="#fill">fill</a>.</p>
+<p>Esim. seuraava ohjelma piirtää ensin valkoisen viivan ja sitten punaisen viivan harmaalle pohjalle.</p>
+<pre><code>
+size(200, 200);
+background(150);
+stroke(255);       // Valkoinen
+line(50, 50, 150, 50);
+stroke(200, 0, 0);       // punainen
+line(50, 100, 150, 100);
+</code></pre>
+
+<a name="strokeWeight"></a>
+<h2>strokeWeight(leveys);</h2>
+<p>strokeWeight-funktio asettaa viivojen paksuuden eli niin sanotusti 'kynän leveyden'. Viivan leveys annetaan pikseleinä.</p>
+<p>Esim. seuraava ohjelma tekee kuvioita joissa viivan leveys vaihtelee.</p>
+<pre><code>size(200, 200);
+// Ohuilla viivoilla
+strokeWeight(1);
+ellipse(100, 50, 50, 50);
+line(50, 50, 150, 50);
+
+// Paksuilla viivoilla
+strokeWeight(5);
+ellipse(100, 100, 50, 50);
+line(50, 100, 150, 100);
+</code></pre>
+
+
+</body>
+</html>
+

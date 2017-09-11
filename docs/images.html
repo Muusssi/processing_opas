@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Processing-opas | Kuvat </title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+  <h1>Kuvat</h1>
+  <a href="/index.html">Etusivulle</a>
+
+
+<a name="PImage"></a>
+<h3>PImage</h3>
+<p>PImage on muuttuja tyyppi, johon tallennetaan kuvia Prossing ohjelmissa.</p>
+
+<a name="loadImage"></a>
+<h3>loadImage("kuvan_osoite")</h3>
+<p>loadImage lataa kuvan verkosta tai tiedostosta tietokoneelta. Jos kuva on tallennettu ohjelman data-kansioon riittää että annetaan ainoastaan kuvatiedoston nimi. Tämä metodi tulee ajaa setup-metodin sisällä ja saattaa kestää hetken jos kuva on iso.</p>
+
+<a name="image"></a>
+<h3>image(kuva, x, y)</h3>
+<p>image piirtää annetun kuvan haluttuihin koordinaatteihin.</p>
+
+Esim. seuraava ohjelma lataa verkosta linnun kuvan ja piirtää sitä sitten kursorin osoittamaan paikkaan.
+```processing
+// esitellään kuva muuttuja
+PImage kuva;
+
+void setup() {
+  size(800, 600);
+  // ladataan kuva verkosta
+  kuva = loadImage("http://www.wpclipart.com/animals/birds/_Miscellaneous/generic_colors/clip_art_bird_blue.jpg");
+}
+
+// uudelleen ja uudellen ajettava koodi
+void draw() {
+  background(255);
+  // piirtää kuvan kursorin kohdalle
+  image(kuva, mouseX, mouseY);
+}
+```
+
+</body>
+</html>

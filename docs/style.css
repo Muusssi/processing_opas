@@ -1,0 +1,17 @@
+
+h1, h2 {
+    padding: 0px;
+    margin: 0px;
+}
+
+
+pre {
+    display: inline-block;
+    background-color: lightgray;
+    padding: 1em;
+    margin: none;
+}
+
+code {
+    background-color: lightgray;
+}
