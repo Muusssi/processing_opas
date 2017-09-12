@@ -1,2 +1,2 @@
-<h1><a href="https://github.com/Muusssi/processing_opas/wiki">Processing opas</a></h1>
-Suomenkielinen opas Processing-ohjelmointi kieleen
+<h1><a href="http://muusssi.github.io/processing_opas/index.html">Processing-oppaaseen</a></h1>
+Suomenkielinen opas Processing-ohjelmointikieleen
