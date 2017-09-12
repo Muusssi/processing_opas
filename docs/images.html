@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Processing-opas | Kuvat </title>
-  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel="stylesheet" type="text/css" href="/processing_opas/style.css">
 </head>
 <body>
   <h1>Kuvat</h1>
@@ -12,34 +12,32 @@
 
 <a name="PImage"></a>
 <h3>PImage</h3>
-<p>PImage on muuttuja tyyppi, johon tallennetaan kuvia Prossing ohjelmissa.</p>
+<p><code>PImage</code> on muuttuja tyyppi, johon tallennetaan kuvia Processing-ohjelmissa.</p>
 
 <a name="loadImage"></a>
 <h3>loadImage("kuvan_osoite")</h3>
-<p>loadImage lataa kuvan verkosta tai tiedostosta tietokoneelta. Jos kuva on tallennettu ohjelman data-kansioon riittää että annetaan ainoastaan kuvatiedoston nimi. Tämä metodi tulee ajaa setup-metodin sisällä ja saattaa kestää hetken jos kuva on iso.</p>
+<p><code>loadImage</code> lataa kuvan verkosta tai tiedostosta tietokoneelta. Jos kuva on tallennettu ohjelman data-kansioon riittää, että annetaan ainoastaan kuvatiedoston nimi. Tämä metodi tulee ajaa setup-metodin sisällä ja saattaa kestää hetken jos kuva on iso.</p>
 
 <a name="image"></a>
 <h3>image(kuva, x, y)</h3>
-<p>image piirtää annetun kuvan haluttuihin koordinaatteihin.</p>
+<p><code>image</code> piirtää annetun kuvan haluttuihin koordinaatteihin.</p>
 
 Esim. seuraava ohjelma lataa verkosta linnun kuvan ja piirtää sitä sitten kursorin osoittamaan paikkaan.
-```processing
-// esitellään kuva muuttuja
-PImage kuva;
+<pre><code>// esitellään linnun_kuva muuttuja
+PImage linnun_kuva;
 
 void setup() {
   size(800, 600);
   // ladataan kuva verkosta
-  kuva = loadImage("http://www.wpclipart.com/animals/birds/_Miscellaneous/generic_colors/clip_art_bird_blue.jpg");
+  linnun_kuva = loadImage("http://www.wpclipart.com/animals/birds/_Miscellaneous/generic_colors/clip_art_bird_blue.jpg");
 }
 
 // uudelleen ja uudellen ajettava koodi
 void draw() {
   background(255);
   // piirtää kuvan kursorin kohdalle
-  image(kuva, mouseX, mouseY);
-}
-```
+  image(linnun_kuva, mouseX, mouseY);
+}</code></pre>
 
 </body>
 </html>
