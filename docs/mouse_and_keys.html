@@ -13,6 +13,8 @@
 
 <h1>Hiiri</h1>
 
+<a name="mouseX"></a>
+<a name="mouseY"></a>
 <h3>mouseX ja mouseY</h3>
 <p>mouseX ja mouseY -muuttujissa on tallessa kursorin (eli hiiren osoittimen) sen hetkiset koordinaatit.</p>
 <p>Esim. seuraava ohjelma piirtää piirtoikkunan keskelle ellipsejä, joiden korkeus riippuu kursorin etäisyydesta yläreunasta ja leveys korsorin etäisyydesta ikkunan vasemmasta reunasta.</p>
@@ -24,6 +26,7 @@ void draw() {
   ellipse(width/2, height/2, mouseX, mouseY);
 }</code></pre>
 
+<a name="mousePressed"></a>
 <h3>mousePressed</h3>
 <p><code>mousePressed</code>-muuttujassa on tallessa tieto siitä onko, hiiren painike painettuna.</p>
 <p>Esim. seuraava ohjelma maalaa ruudun vihreäksi jos hiiren painiketta ei ole painettu ja harmaaksi jos jokin nappi on painettu.</p>
@@ -40,7 +43,7 @@ void draw() {
   }
 }</code></pre>
 
-
+<a name="mousePressed()"></a>
 <h3>void mousePressed() {}</h3>
 <p><code>mousePressed() {}</code>-funktio ajetaan aina kun jotakin hiiren painiketta painetaan.</p>
 <p>Esim. seuraava ohjelma piirtää ympyrän ruudun keskelle ja jokaisella napin painalluksella kasvattaa ympyrän kokoa.</p>
@@ -62,6 +65,7 @@ void mousePressed() {
 
 <h1>Näppäimistö</h1>
 
+<a name="keyPressed"></a>
 <h3>keyPressed</h3>
 <p><code>keyPressed</code>-muuttujassa on tallessa tieto siitä onko, jokin nappi painettuna.</p>
 <p>Esim. seuraava ohjelma maalaa ruudun vihreäksi jos mitään nappia ei ole painettu ja harmaaksi jos jokin nappi on painettu.</p>
@@ -78,6 +82,7 @@ void draw() {
   }
 }</code></pre>
 
+<a name="keyPressed()"></a>
 <h3>void keyPressed() {}</h3>
 <p><code>keyPressed() {}</code>-funktio ajetaan aina kun jotakin painiketta painetaan.</p>
 <p>Esim. seuraava ohjelma piirtää ympyrän ruudun keskelle ja jokaisella napin painalluksella kasvattaa ympyrän kokoa.</p>
@@ -95,6 +100,7 @@ void keyPressed() {
   ympyran_koko++;
 }</code></pre>
 
+<a name="keyCode"></a>
 <h3>keyCode</h3>
 <p><code>keyCode</code>-muuttujassa on tallessa painetun painikkeen numero. Tämän avulla voi selvittää mitä painiketta on painettu. Painikkeiden numerot saattavat vaihdella eri näppäimistöjen välillä, joten tätä esimerkki ohjelmaa voi käyttää tarkistamaan mikä on kunkin painikkeen numero.</p>
 <p>Seuraava ohjelma kiroittaa painetun painikkeen numeron ikkunan keskelle aina kun jotain painiketta on painettu.</p>

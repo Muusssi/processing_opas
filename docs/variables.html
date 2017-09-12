@@ -89,21 +89,22 @@ ellipsien_halkaisja = ellipsien_halkaisja * kerroin;
 ellipse(200, 200, ellipsien_halkaisja, ellipsien_halkaisja);</code></pre>
 
 
-<a name="String"></a>
-<h3>String</h3>
-<p><code>String</code> eli merkkijono on muuttuja tyyppi, johon talletetaan tekstiä. Tervehdys "Moi maailma!" voidaan tallettaa viesti-nimiseen muuttujaan näin: <code>String viesti = "Moi maailma!";</code> Teksti voi olla myös tyhjä, jolloin kirjoitetaan <code>String tyhja = "";</code>. Merkkijonoja voi yhdistellä eli tallettaa peräkkäin käyttämällä plus merkkiä.</p>
-<p>Esim. seuraava ohjelma tulostaa ensiksi tyhjän rivin ja sitten tekstit "Moi", "Hei kaikki" ja "Hei kaikki ihmiset!".</p>
+<a name="boolean"></a>
+<h3>boolean</h3>
+<p><code>boolean</code> on totuusarvoinen muuttuja, jonka arvo on joko <code>true</code> eli tosi tai <code>false</code> eli epätosi.</p>
 
-<pre><code>String viesti = "";
-String toinen_viesti = "Hei kaikki";
-String loppu = " ihmiset!";
+<pre><code>size(400, 400);
+// Kokeile muuttaa arvoa: true tai false
+boolean piirretaan_ympyra = true;
 
-println(viesti); // tulostaa tyhjän rivin
-viesti = "Moi.";
-println(viesti); // tulostaa "Moi."
-println(toinen_viesti); // tulostaa "Hei kaikki"
-viesti = toinen_viesti + loppu; // "Hei kaikki" + " ihmiset!"
-println(viesti); // tulostaa "Hei kaikki ihmiset!"</code></pre>
+if (piirretaan_ympyra) {
+  println("Piirretään ympyrä");
+  ellipse(200, 200, 200, 200);
+}
+else {
+  println("Piirretäänkin neliö");
+  rect(100, 100, 200, 200);
+};</code></pre>
 
 
 <h2>Hyödyllisiä muuttujia</h2>
