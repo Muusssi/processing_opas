@@ -8,8 +8,9 @@ h1, h2 {
 pre {
     display: inline-block;
     background-color: lightgray;
-    padding: 1em;
+    padding: 1rem;
     margin: none;
+    border-radius: 10px;
 }
 
 code {
