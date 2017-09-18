@@ -3,7 +3,7 @@
 <head>
   <title>Processing-opas | Piirtokomennot</title>
   <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="/processing_opas/style.css">
+  <link href="/processing_opas/prism/prism.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -25,13 +25,13 @@
 <p>Jokainen processing ohjelma käynnistyy omassa ikkunassaan, joka on automaattisesti 100 pikseliä leveä ja 100 pikseliä korkea.
 size-funktiolla voi kuitenkin määrittää ikkunan koon eli sen leveyden ja korkeuden pikseleinä.</p>
 <p>Esim. seuraava ohjelma luo 400 pikseliä leveän ja 500 pikseliä korkean ikkunan:</p>
-<pre><code>size(400,500);</code></pre>
+<pre><code class="language-processing">size(400,500);</code></pre>
 
 <a name="line"></a>
 <h2>line(alkupisteX, alkupisteY, loppupisteX, loppupisteY);</h2>
 <p>line-funktio piirtää viivan kahden annetun pisteen välille.</p>
 <p>Esim. seurava ohjelma piirtää ikkunaan päättömän tikku-ukon</p>
-<pre><code>size(300, 400);
+<pre><code class="language-processing">size(300, 400);
 line(50, 50, 150, 125);    // vasen käsi
 line(250, 50, 150, 125);   // oikea käsi
 line(150, 100, 150, 250);  // varatalo
@@ -43,7 +43,7 @@ line(150, 250, 225, 350);  // oikea jalka
 <h2>ellipse(keskusX, keskusY, leveys, korkeus);</h2>
 <p>ellipse-funktio piirtää ellipsin, jonka keskipiste on annetussa paikassa. Leveys ja korkeus määräävät ellipsin muodon. Jos leveys ja korkeus ovat samat, kyseessä on ympyrä.</p>
 <p>Esim. seurava ohjelma piirtää ikkunaan yksinkertaiset kasvot</p>
-<pre><code>size(200, 200);
+<pre><code class="language-processing">size(200, 200);
 ellipse(100, 100, 150, 150); // pää
 ellipse(75, 75, 40, 30);     // vasen silmä
 ellipse(125, 75, 40, 30);    // oikea silmä
@@ -55,7 +55,7 @@ ellipse(100, 130, 80, 30);   // suu
 <h2>rect(kulmaX, kulmaY, leveys, korkeus);</h2>
 <p>rect-functio piirtää nelikulmion, jonka vasen yläkulma on annetussa pisteessä. Leveys ja korkeus määrittävät nelikulmion koon ja muodon.</p>
 <p>Esim. seuraava ohjelma piirtää kerrostalon</p>
-<pre><code>size(400, 500);
+<pre><code class="language-processing">size(400, 500);
 rect(50, 50, 200, 300); // Rakennus
 // Ylimmän kerroksen ikkunoita
 rect(80, 70, 30, 40);
@@ -76,7 +76,7 @@ rect(190, 290, 30, 60);
 <h2>fill(harmaanSävy); TAI fill(punainen, vihreä, sininen);</h2>
 <p>fill-funktio asettaa kuvioiden täyttö värin. Värit annetaan numeroina välillä 0-255. 0 tarkoittaa ei lainkaan väriä (eli mustaa) ja 255 tarkoittaa valkoista. Jos annetaan vain yksi väri arvo niin värit ovat harmaan sävyjä. Väri voidaan antaa myös punaisen, vihreän ja sinisen sekoituksena.</p>
 <p>Esim. seurava ohjelma piirtää ikkunaan eri väreillä täytettyjä ympyröitä.</p>
-<pre><code>size(400, 400);
+<pre><code class="language-processing">size(400, 400);
 // Ensimmäinen rivi
 fill(0);              // Musta
 ellipse(50, 40, 40, 40);
@@ -132,7 +132,7 @@ ellipse(150, 250, 40, 40);</code></pre>
 <h2>background(harmaanSävy); TAI background(punainen, vihreä, sininen);</h2>
 <p>background-funktio asettaa taustavärin. Värit annetaan numeroina välillä 0-255. Katso lisää väreistä kohdasta <a href="#fill">fill</a>.</p>
 <p>Esim. seuraava ohjelma värittää taustavärin vaalean siniseksi.</p>
-<pre><code>size(200, 200);
+<pre><code class="language-processing">size(200, 200);
 background(150, 200, 255);
 </code></pre>
 
@@ -140,7 +140,7 @@ background(150, 200, 255);
 <h2>stroke(harmaanSävy); TAI stroke(punainen, vihreä, sininen);</h2>
 <p>stroke-funktio asettaa piirtovärin eli niin sanotusti 'kynän värin'. Värit annetaan numeroina välillä 0-255. Katso lisää väreistä kohdasta <a href="#fill">fill</a>.</p>
 <p>Esim. seuraava ohjelma piirtää ensin valkoisen viivan ja sitten punaisen viivan harmaalle pohjalle.</p>
-<pre><code>size(200, 200);
+<pre><code class="language-processing">size(200, 200);
 background(150);
 stroke(255);       // Valkoinen
 line(50, 50, 150, 50);
@@ -152,7 +152,7 @@ line(50, 100, 150, 100);
 <h2>strokeWeight(leveys);</h2>
 <p>strokeWeight-funktio asettaa viivojen paksuuden eli niin sanotusti 'kynän leveyden'. Viivan leveys annetaan pikseleinä.</p>
 <p>Esim. seuraava ohjelma tekee kuvioita joissa viivan leveys vaihtelee.</p>
-<pre><code>size(200, 200);
+<pre><code class="language-processing">size(200, 200);
 // Ohuilla viivoilla
 strokeWeight(1);
 ellipse(100, 50, 50, 50);
@@ -164,6 +164,7 @@ ellipse(100, 100, 50, 50);
 line(50, 100, 150, 100);
 </code></pre>
 
+<script src="/processing_opas/prism/prism.js"></script>
 
 </body>
 </html>
