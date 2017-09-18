@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Processing-opas | Teksti </title>
   <link rel="stylesheet" type="text/css" href="/processing_opas/style.css">
+  <link href="/processing_opas/prism/prism.css" rel="stylesheet" />
 </head>
 <body>
   <h1>Teksti</h1>
@@ -11,16 +12,16 @@
 
 <a name="println()"></a>
 <h3>println("teksti");</h3>
-<p><code>println</code>-funktio kirjoittaa annetun tekstin konsoliin. Huomaa, että tekstin tulee olla lainaus merkeissä.</p>
+<p><code class="language-processing">println</code>-funktio kirjoittaa annetun tekstin konsoliin. Huomaa, että tekstin tulee olla lainaus merkeissä.</p>
 <p>Esim. seuraava ohjelma kirjoittaa konsoliin tekstin "Hei maailma!":</p>
-<pre><code>println("Hei maailma!");</code></pre>
+<pre><code class="language-processing">println("Hei maailma!");</code></pre>
 
 <a name="String"></a>
 <h3>String</h3>
-<p><code>String</code> eli merkkijono on muuttuja tyyppi, johon talletetaan tekstiä. Tervehdys "Moi maailma!" voidaan tallettaa viesti-nimiseen muuttujaan näin: <code>String viesti = "Moi maailma!";</code> Teksti voi olla myös tyhjä, jolloin kirjoitetaan <code>String tyhja = "";</code>. Merkkijonoja voi yhdistellä eli tallettaa peräkkäin käyttämällä plus merkkiä.</p>
+<p><code class="language-processing">String</code> eli merkkijono on muuttuja tyyppi, johon talletetaan tekstiä. Tervehdys "Moi maailma!" voidaan tallettaa viesti-nimiseen muuttujaan näin: <code class="language-processing">String viesti = "Moi maailma!";</code> Teksti voi olla myös tyhjä, jolloin kirjoitetaan <code class="language-processing">String tyhja = "";</code>. Merkkijonoja voi yhdistellä eli tallettaa peräkkäin käyttämällä plus merkkiä.</p>
 <p>Esim. seuraava ohjelma tulostaa ensiksi tyhjän rivin ja sitten tekstit "Moi", "Hei kaikki" ja "Hei kaikki ihmiset!".</p>
 
-<pre><code>String viesti = "";
+<pre><code class="language-processing">String viesti = "";
 String toinen_viesti = "Hei kaikki";
 String loppu = " ihmiset!";
 
@@ -31,6 +32,6 @@ println(toinen_viesti); // tulostaa "Hei kaikki"
 viesti = toinen_viesti + loppu; // "Hei kaikki" + " ihmiset!"
 println(viesti); // tulostaa "Hei kaikki ihmiset!"</code></pre>
 
-
+<script src="/processing_opas/prism/prism.js"></script>
 </body>
 </html>

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Processing-opas | Ohjelman kulku ja funktiot </title>
   <link rel="stylesheet" type="text/css" href="/processing_opas/style.css">
+  <link href="/processing_opas/prism/prism.css" rel="stylesheet" />
 </head>
 <body>
 <h1>Ohjelman kulku ja funktiot</h1>
@@ -12,9 +13,9 @@
 <a name="setup"></a>
 <a name="draw"></a>
 <h3>setup() {} ja draw() {}</h3>
-<p>setup- ja draw-funktioita tarvitaan kun halutaan tehdä ohjelmia, jotka eivät pääty heti kun kaikki komennot on suoritettu. Niitä tarvitaan myös kaikissa interaktiivissa ohjelmissa. Ensiksi määritellään <code>setup()</code> eli valmistelu funktio. setup-funktioon kirjoitetaan koodi, joka suoritetaan ohjelman aluksi valmisteluna. Esimerkiksi <code>size()</code> pitää määrittää setup-funktiossa. <code>draw()</code> eli piirrä funktion sisältö ajetaan uudestaan ja uudestaan, joten sen avulla voidaan esimerkiksi animoida.</p>
+<p>setup- ja draw-funktioita tarvitaan kun halutaan tehdä ohjelmia, jotka eivät pääty heti kun kaikki komennot on suoritettu. Niitä tarvitaan myös kaikissa interaktiivissa ohjelmissa. Ensiksi määritellään <code class="language-processing">setup()</code> eli valmistelu funktio. setup-funktioon kirjoitetaan koodi, joka suoritetaan ohjelman aluksi valmisteluna. Esimerkiksi <code class="language-processing">size()</code> pitää määrittää setup-funktiossa. <code class="language-processing">draw()</code> eli piirrä funktion sisältö ajetaan uudestaan ja uudestaan, joten sen avulla voidaan esimerkiksi animoida.</p>
 <p>Esim. seuraava ohjelma käyttää setup() ja draw() funktioita ja piirtää ympyröitä kursorin osoittaamaan kohtaan.</p>
-<pre><code>// valmistelut
+<pre><code class="language-processing">// valmistelut
 void setup() {
   size(400, 300);
 }
@@ -29,12 +30,12 @@ void draw() {
 
 <a name="if"></a>
 <h3>if ja else</h3>
-<code><pre>if (ehto) {
+<code class="language-processing"><pre>if (ehto) {
   //suoritetaan jos ehto täyttyy
 }</code></pre>
 <p>if-komennon avulla voi ohjata mikä osa ohjelmasta ajetaan. if lauseessa sulkujen sisään kirjoitetan jokin ehto, joka täyttyy tai ei täyty. Jos ehto täyttyy aaltosulkeiden välissä olevat käskyt suoritetaan. Jos ehto ei täyty koko kohdan yli hypätään.</p>
 <p>Esim. seuraava ohjelma piirtää vihreitä ympyröitä hiiren kohdalle jos hiiri on yli 200 pikselin päässä vasemmasta reunasta ja jos hiiri on alle 200 pikselin päässä vasemmasta reunasta piirtää punaisia ympyröitä. Muulloin ei tehdä mitään.</p>
-<code><pre>void setup() {
+<code class="language-processing"><pre>void setup() {
   size(400, 300);
 }
 
@@ -52,14 +53,14 @@ void draw() {
 }</code></pre>
 <a name="else"></a>
 <p>If-komennon kanssa voidaan käyttää myös else-komentoa, joka määrä mitä tehdään jos if-komennon ehto ei täyty.</p>
-<code><pre>if (ehto) {
+<code class="language-processing"><pre>if (ehto) {
   //suoritetaan jos ehto täyttyy
 }
 else {
   //suoritetaan jos ehto ei täytty
 }</code></pre>
 <p>Esim. edellinen ohjelma voidaan kirjoittaa myös näin.</p>
-<code><pre>void setup() {
+<code class="language-processing"><pre>void setup() {
   size(400, 300);
 }
 
@@ -76,5 +77,6 @@ void draw() {
   }
 }</code></pre>
 
+<script src="/processing_opas/prism/prism.js"></script>
 </body>
 </html>

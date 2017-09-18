@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Processing-opas | Muuttujat </title>
   <link rel="stylesheet" type="text/css" href="/processing_opas/style.css">
+  <link href="/processing_opas/prism/prism.css" rel="stylesheet" />
 </head>
 <body>
   <h1>Muuttujat</h1>
@@ -13,9 +14,9 @@
 
 <a name="int"></a>
 <h3>int</h3>
-<p><code>int</code> (eng. integer) määrittää kokonaisluku muuttujan. Muuttujiin voi tallettaa lukuja, joita voi käyttää muualla ohjelmassa. Muuttuja määritetään näin: <code>int muuttujan_nimi = alku_arvo;</code>. Muuttujan nimen saa itse keksiä ja se kannattaa nimetä niin, että sen tarkoituksen muistaa myöhemminkin. Muuttujan nimi pitää kirjoittaa yhteen ja siinä voi käyttää isoja tai pieniä kirjaimia A-Z, a-z sekä alaviivaa _ ja numeroita. Muuttujan nimessä ei voi käyttää ääkkösiä, eikä se saa alkaa numerolla. Esimerkkejä muuttujien nimistä voisi olla: <code>pallon_nopeus, pallo1, pallo2, pallojenKoko</code></p>
+<p><code class="language-processing">int</code> (eng. integer) määrittää kokonaisluku muuttujan. Muuttujiin voi tallettaa lukuja, joita voi käyttää muualla ohjelmassa. Muuttuja määritetään näin: <code class="language-processing">int muuttujan_nimi = alku_arvo;</code>. Muuttujan nimen saa itse keksiä ja se kannattaa nimetä niin, että sen tarkoituksen muistaa myöhemminkin. Muuttujan nimi pitää kirjoittaa yhteen ja siinä voi käyttää isoja tai pieniä kirjaimia A-Z, a-z sekä alaviivaa _ ja numeroita. Muuttujan nimessä ei voi käyttää ääkkösiä, eikä se saa alkaa numerolla. Esimerkkejä muuttujien nimistä voisi olla: <code class="language-processing">pallon_nopeus, pallo1, pallo2, pallojenKoko</code></p>
 <p>Esim. seuraavassa ohjelmassa kaikkien ympyröiden kokoa ja väriä voi muuttaa muuttamalla muuttujien arvoa ensimmäisillä riveillä. Mieti kuinka paljon työtä olisi muuttaa yksitellen kaikkien ellipsien kokoa erikseen:</p>
-<pre><code>size(400, 400);
+<pre><code class="language-processing">size(400, 400);
 int ellipsien_halkaisja = 30;
 int ellipsien_vari = 100;
 
@@ -42,9 +43,9 @@ ellipse(150, 250, ellipsien_halkaisja, ellipsien_halkaisja);</code></pre>
 
 <a name="float"></a>
 <h3>float</h3>
-<p><code>float</code> eli liukuluku (eng. floating point number) määrittää reaaliluku-muttujan, johon talletetaan lukuja jotka eivät ole tasalukuja esimerkiksi 0.5 tai 3.141. Lähes kaikki komennot hyväksyvät yhtä hyvin niin liukulukuja kuin kokonaislukuja.</p>
+<p><code class="language-processing">float</code> eli liukuluku (eng. floating point number) määrittää reaaliluku-muttujan, johon talletetaan lukuja jotka eivät ole tasalukuja esimerkiksi 0.5 tai 3.141. Lähes kaikki komennot hyväksyvät yhtä hyvin niin liukulukuja kuin kokonaislukuja.</p>
 
-<pre><code>size(400, 400);
+<pre><code class="language-processing">size(400, 400);
 noFill(); // Tämä komento tarkoittaa että ympyröille
           // piirretään vain ääriviivat
 float ellipsien_halkaisja = 400;
@@ -91,9 +92,9 @@ ellipse(200, 200, ellipsien_halkaisja, ellipsien_halkaisja);</code></pre>
 
 <a name="boolean"></a>
 <h3>boolean</h3>
-<p><code>boolean</code> on totuusarvoinen muuttuja, jonka arvo on joko <code>true</code> eli tosi tai <code>false</code> eli epätosi.</p>
+<p><code class="language-processing">boolean</code> on totuusarvoinen muuttuja, jonka arvo on joko <code class="language-processing">true</code> eli tosi tai <code class="language-processing">false</code> eli epätosi.</p>
 
-<pre><code>size(400, 400);
+<pre><code class="language-processing">size(400, 400);
 // Kokeile muuttaa arvoa: true tai false
 boolean piirretaan_ympyra = true;
 
@@ -113,18 +114,18 @@ else {
 <a name="width"></a>
 <a name="height"></a>
 <h3>width ja height</h3>
-<p><code>width</code> (leveys) ja <code>height</code> (korkeus) -muuttujissa on tallessa piirtoikkunan levyes ja korkeus.</p>
+<p><code class="language-processing">width</code> (leveys) ja <code class="language-processing">height</code> (korkeus) -muuttujissa on tallessa piirtoikkunan levyes ja korkeus.</p>
 <p>Esim. seuraava ohjelma piirtää piirtoikkunan keskelle ellipsin joka täyttää koko ikkunan riippumatta siitä kuinka iso ikkuna on.</p>
-<pre><code>size(200,300); //Kokeile muuttaa ikkunan kokoa
+<pre><code class="language-processing">size(200,300); //Kokeile muuttaa ikkunan kokoa
 // ellipsin keskipiste on ikkunan keskellä
 ellipse(width/2, height/2, width, height);</code></pre>
 
 <a name="mouseX"></a>
 <a name="mouseY"></a>
 <h3>mouseX ja mouseY</h3>
-<p><code>mouseX</code> ja <code>mouseY</code> -muuttujissa on tallessa kursorin (eli hiiren osoittimen) sen hetkiset koordinaatit.</p>
+<p><code class="language-processing">mouseX</code> ja <code class="language-processing">mouseY</code> -muuttujissa on tallessa kursorin (eli hiiren osoittimen) sen hetkiset koordinaatit.</p>
 <p>Esim. seuraava ohjelma piirtää piirtoikkunan keskelle ellipsejä, joiden korkeus riippuu kursorin etäisyydesta ylä reunasta ja leveys korsorin etäisyydesta ikkunan vasemmasta reunasta.</p>
-<pre><code>void setup() {
+<pre><code class="language-processing">void setup() {
   size(400,400);
 }
 
@@ -134,9 +135,9 @@ void draw() {
 
 <a href="mousePressed"></a>
 <h3>mousePressed</h3>
-<p><code>mousePressed</code>-muuttujassa on tallessa tieto siitä onko, hiiren painike painettuna.</p>
+<p><code class="language-processing">mousePressed</code>-muuttujassa on tallessa tieto siitä onko, hiiren painike painettuna.</p>
 <p>Esim. seuraava ohjelma maalaa ruudun vihreäksi jos hiiren painiketta ei ole painettu ja harmaaksi jos jokin nappi on painettu.</p>
-<pre><code>svoid setup() {
+<pre><code class="language-processing">svoid setup() {
   size(400,400);
 }
 
@@ -150,6 +151,6 @@ void draw() {
 }</code></pre>
 
 
-
+<script src="/processing_opas/prism/prism.js"></script>
 </body>
 </html>
