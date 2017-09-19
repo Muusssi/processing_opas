@@ -12,7 +12,7 @@
 
 <a name="println()"></a>
 <h3>println("teksti");</h3>
-<p><code class="language-processing">println</code>-funktio kirjoittaa annetun tekstin konsoliin. Huomaa, että tekstin tulee olla lainaus merkeissä.</p>
+<p><code class="language-processing">println</code>-funktio kirjoittaa annetun tekstin konsoliin. Se ei siis näy itse ohjelmassa ja sitä voi käyttää apuna kun selvittelee ongelmia ohjelmassa. Huomaa, että tekstin tulee olla lainaus merkeissä.</p>
 <p>Esim. seuraava ohjelma kirjoittaa konsoliin tekstin "Hei maailma!":</p>
 <pre><code class="language-processing">println("Hei maailma!");</code></pre>
 
@@ -31,6 +31,36 @@ println(viesti); // tulostaa "Moi."
 println(toinen_viesti); // tulostaa "Hei kaikki"
 viesti = toinen_viesti + loppu; // "Hei kaikki" + " ihmiset!"
 println(viesti); // tulostaa "Hei kaikki ihmiset!"</code></pre>
+
+
+<a name="text()"></a>
+<h3>text("teksti", x, y)</h3>
+<p><code class="language-processing">text()</code> funktio kirjoittaa tekstin näytölle annettuun kohtaan.</p>
+<pre><code class="language-processing">void setup() {
+  size(400,400);
+}
+
+void draw() {
+  background(200);
+  // Kirjoittaa "Hei" kursorin kohdalle
+  text("Hei", mouseX, mouseY);
+}</code></pre>
+
+<a name="textSize()"></a>
+<h3>text(tekstin_koko)</h3>
+<p><code class="language-processing">textSize()</code> funktio asettaa näytölle kirjoitettavan tekstin koon.</p>
+
+<pre><code class="language-processing">void setup() {
+  size(400,400);
+  textSize(50); // Tekstin koko
+}
+
+void draw() {
+  background(200);
+  // Kirjoittaa "Hei" kursorin kohdalle
+  text("Hei", mouseX, mouseY);
+}</code></pre>
+
 
 <script src="/processing_opas/prism/prism.js"></script>
 </body>
