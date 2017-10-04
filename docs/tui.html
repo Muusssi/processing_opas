@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Processing-opas | TUI </title>
+  <link rel="stylesheet" type="text/css" href="/processing_opas/style.css">
+  <link href="/processing_opas/prism/prism.css" rel="stylesheet" />
+</head>
+<body>
+  <h1>TUI</h1>
+  <a href="/processing_opas/index.html">Etusivulle</a>
+  <p>TUI eli Tommin UI-kirjasto sisältää erilaisia käyttäjien syötteiden käsittelyä helpottavia toimintoja, joita Processing ei normaalisti tue kuten:</p>
+  <ul>
+    <li><a href="#Painike">Painike</a></li>
+    <li><a href="#nappitarkkailija">nappitarkkailija</a></li>
+  </ul>
+
+<h2>Kirjaston asentaminen</h2>
+<a name="asentaminen"></a>
+<p>TUI on kirjasto, joka tarjoaa lisää komentoja Processing ohjelmaasi, mutta koska se ei kuulu normaaliin Processing ympäristöön se pitää asentaa ja ottaa käyttöön ohjelmassasi. TUI on helppo asentaa lataamalla tui2.0.zip tiedosto <a target="_blank" href="https://github.com/Muusssi/processing_opas/releases/tag/tui-2.0">täältä</a> ja purkamalla sen sisältö sketchbook:in kansioon <code>libraries</code>, joka yleensä löytyy näistä paikoista (jos et ole itse mennyt sitä siirtämään):</p>
+<ul>
+  <li>Windows: <code>My Documents/Processing/libraries</code></li>
+  <li>OSX: <code>~/Documents/Processing/libraries</code></li>
+</ul>
+<p> Käynnistä vielä Prosessing editori uudestaan, jotta se havaitsee uuden kirjaston. Nyt tui pitäisi löytyä valikosta: <code>Sketch -> Import Library</code> ja listan pohjalta pitäisi löytyä TUI.</p>
+
+<p>
+Saat kirjaston toiminnot käyttöösi kirjoittamalla <code class="language-processing">import tui.*;</code> ohjelman alkuun. Lisää myöskin komento <code class="language-processing">TUI.aloita(this);</code> setup-metodiin. Muuten mikään TUI:n toiminnoista ei tule toimimaan.
+</p>
+
+
+<a name="Painike"></a>
+<h2>Painike</h2>
+<p>Pinikkeet ovat näytölle piirrettäviä nappeja, joita klikkaamalla käyttäjä voi tehdä jotain. Uuden painikeen voi luoda ja tallettaa komenolla:</p>
+<pre><code class="language-processing">Painike painike = new Painike("Painikkeen teksti", x, y);
+</code></pre>
+
+<p>Jotta painikkeita voi klikata pitää TUI:lle kertoa kun hiirtä klikataan:</p>
+<p><code class="language-processing">// Tämä metodi suoritetaan aina kun hiirtä klikataan
+void mousePressed() {
+  // Jotta painikkeet toimivat hiiren painallukset pitää raportoida
+  TUI.huomaa_hiiren_painallus();
+}
+</code></pre>
+
+<p><code class="language-processing">TUI.piirra_painikkeet();</code> piirtää kaikki painikkeet näytölle.</p>
+
+<p>Esim. seuraavassa ohjelmassa on kaksi painiketta. Yritäpä klika toista niistä!</p>
+<pre><code class="language-processing">import tui.*;
+
+// Esitellään kaksi painiketta joiden tyyppi on Painike
+Painike painike1;
+Painike painike2;
+
+void setup() {
+  size(400, 600);
+  // Tämä tarvitaan, jotta TUI tietää mihin ikkunaan piirretään
+  TUI.aloita(this);
+  // Luodaan painikkeet ja talletetaan ne
+  painike1 = new Painike("Ei onnistu", 100, 200);
+  painike2 = new Painike("Klikkaa mua", 100, 100);
+}
+
+void draw() {
+  // Niin kauan kuin painike1 on hiiren kohdalla, siirretään se
+  // uuteen satunnaiseen paikkaan.
+  while (painike1.kursori_kohdalla()) {
+    painike1.x = int(random(0, width - painike1.leveys));
+    painike1.y = int(random(0, height - painike1.korkeus));
+  }
+  // Piirretään painikkeet
+  background(200, 0.2);
+  TUI.piirra_painikkeet();
+}
+
+// Tämä metodi suoritetaan aina kun hiirtä klikataan
+void mousePressed() {
+  // Jotta painikkeet toimivat hiiren painallukset pitää raportoida
+  TUI.huomaa_hiiren_painallus();
+}
+</code></pre>
+
+
+<a name="nappitarkkailija"></a>
+<h2>Nappitarkkailija</h2>
+<p>TUI:n nappitarkkailija ominaisuus auttaa korjaamaan yhden ärsyttävän ongelman Processing ohjelmissa. Processing tarjoaa muuttujat <code class="language-processing"><a href="/processing_opas/mouse_and_keys.html#key">key</a></code> ja <code class="language-processing"><a href="/processing_opas/mouse_and_keys.html#keyCode">keyCode</a></code>, joissa on tallessa tieto siitä mikä näppäin on painettu viimeksi. Näiden apuna on muuttuja <code class="language-processing"><a href="/processing_opas/mouse_and_keys.html#keyPressed">keyPressed</a></code>, jossa on tallessa tieto onko jokin näppäin sillä hetkellä painettuna.</p>
+<p>Tämä on kätevää jos ohjelmassasi käytetään vain yhtä näppäintä kerrallaan, mutta jos pelissäsi esimerkiksi liikutaan vasemalle pitämällä <code>a</code>-näppäintä pohjassa ja hypätään välilyönnillä, niin hypättyäsi viimeisin painettu nappi ei ole enää <code>a</code> etkä enää liiku vasemmalle vaikka olisit pitänyt näppäintä pohjassa koko ajan.</p>
+
+<p>Esim. seuraava ohjelma yrittää värjätä taustan punaiseksi jos A näppäintä painetaan, mutta yritäpä pitää A näpppäin pohjassa ja paina välilyötiä.</p>
+<pre><code class="language-processing">void setup() {
+  size(400, 600);
+}
+
+void draw() {
+  background(200);
+  // Jos jokin näppäin on painettu
+  if (keyPressed) {
+    // Ja viimeksi painettu näppäin on 'a'
+    if (key == 'a') {
+      background(255, 0 , 0);
+    }
+  }
+}
+</code></pre>
+
+<p>Nappitarkkailija korjaa kyseisen ongelman ja pitämällä kirjaa siitä mitkä näppäimet ovat painettuina. Jotta nappitarkkailija toimii sille pitää raportoida kun näppäimiä painetaan ja vapautetaan. Raportointi tehdään näin:</p>
+
+<pre><code class="language-processing">
+// Tämä metodi suoritetaan aina kun jokin näppäin painetaan pohjaan
+void keyPressed() {
+  // Jotta nappitarkkailija toimii näppäinten painallukset pitää raportoida
+  TUI.huomaa_painallus();
+}
+
+// Tämä metodi suoritetaan aina kun jokin näppäin vapautetaan
+void keyReleased() {
+  // Jotta nappitarkkailija toimii näppäinten vapautukset pitää raportoida
+  TUI.huomaa_vapautus();
+}
+</code></pre>
+
+<p>Kun raportointi on kunnossa TUI:lta voi kysyä onko jokin painike painettuna<code class="language-processing">TUI.nappain_painettu('A')</code></p>
+
+<p>Esim. seuraava ohjelma hyödyntää nappitarkkailijaa ja korjaa edellisen esimerkin ongelman.</p>
+<pre><code class="language-processing">import tui.*;
+
+void setup() {
+  size(400, 600);
+  // Tämä tarvitaan, jotta TUI tietää mihin ikkunaan piirretään
+  TUI.aloita(this);
+}
+
+void draw() {
+  background(200);
+  // Jos jokin a näppäin on painettu
+  if (TUI.nappain_painettu('A')) {
+    background(255, 0 , 0);
+  }
+}
+
+// Tämä metodi suoritetaan aina kun jokin näppäin painetaan pohjaan
+void keyPressed() {
+  // Jotta nappitarkkailija toimii näppäinten painallukset pitää raportoida
+  TUI.huomaa_painallus();
+}
+
+// Tämä metodi suoritetaan aina kun jokin näppäin vapautetaan
+void keyReleased() {
+  // Jotta nappitarkkailija toimii näppäinten vapautukset pitää raportoida
+  TUI.huomaa_vapautus();
+}
+</code></pre>
+
+  <script src="/processing_opas/prism/prism.js"></script>
+</body>
+</html>

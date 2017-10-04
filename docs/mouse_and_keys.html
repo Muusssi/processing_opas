@@ -116,6 +116,21 @@ void keyPressed() {
   text(keyCode, width/4, height/2);
 }</code></pre>
 
+<a name="key"></a>
+<h3>key</h3>
+<p><code class="language-processing">key</code>-muuttujassa on tallessa viimeksi painetun näppäimen kirjain. Tämän avulla voi selvittää mitä näppäintä on painettu.</p>
+<p>Seuraava ohjelma kiroittaa painetun painikkeen numeron ikkunan keskelle aina kun jotain painiketta on painettu.</p>
+<pre><code class="language-processing">void setup() {
+  textSize(30);
+}
+
+void draw() {}
+
+void keyPressed() {
+  background(200);
+  text(key, width/4, height/2);
+}</code></pre>
+
 <script src="/processing_opas/prism/prism.js"></script>
 </body>
 </html>
