@@ -6,38 +6,37 @@ import java.util.Comparator;
 
 public class Seina {
 
-    protected static int oletus_paksuus = 3;
+    public static int oletus_paksuus = 3;
+    public static int oletus_r = 0;
+    public static int oletus_g = 0;
+    public static int oletus_b = 0;
 
-    float x, y;
-    float korkeus;
-    protected int paksuus;
+    public float x, y;
+    public float korkeus;
+    public int paksuus;
     private boolean olemassa = true;
     public Pelikentta peli_kentta;
-
-    public static void oletus_pakuus(int paksuus) {
-        oletus_paksuus = paksuus;
-    }
+    public int r = 0;
+    public int g = 0;
+    public int b = 0;
 
     public Seina(float x, float y, float korkeus, Pelikentta kentta) {
         this.x = x;
         this.y = y;
         this.korkeus = korkeus;
-        this.paksuus = Seina.oletus_paksuus;
         this.peli_kentta = kentta;
+        this.paksuus = oletus_paksuus;
         peli_kentta.seinat.add(this);
         peli_kentta.seinatJarjestyksessa = new ArrayList<Seina>(peli_kentta.seinat);
         Collections.sort(peli_kentta.seinatJarjestyksessa, new SeinaVertailija());
-        peli_kentta.seinakerros_vanhentunut = true;
-    }
-
-    public void aseta_paksuus(int paksuus) {
-        this.paksuus = paksuus;
-        this.peli_kentta.tasokerros_vanhentunut = true;
     }
 
     protected void piirra() {
-        peli_kentta.seina_kerros.strokeWeight(paksuus);
-        peli_kentta.seina_kerros.line(x, y, x, y + korkeus);
+        Pelikentta.papplet.pushStyle();
+        Pelikentta.papplet.strokeWeight(paksuus);
+        Pelikentta.papplet.stroke(r, g, b);
+        Pelikentta.papplet.line(x, y, x, y + korkeus);
+        Pelikentta.papplet.popStyle();
     }
 
     public boolean kohdalla(Tasohyppelyhahmo hahmo) {
@@ -53,7 +52,6 @@ public class Seina {
             peli_kentta.seinatJarjestyksessa = new ArrayList<Seina>(peli_kentta.seinat);
             Collections.sort(peli_kentta.seinatJarjestyksessa, new SeinaVertailija());
             olemassa = false;
-            peli_kentta.seinakerros_vanhentunut = true;
         }
     }
 
@@ -63,8 +61,31 @@ public class Seina {
             peli_kentta.seinatJarjestyksessa = new ArrayList<Seina>(peli_kentta.seinat);
             Collections.sort(peli_kentta.seinatJarjestyksessa, new SeinaVertailija());
             olemassa = true;
-            peli_kentta.seinakerros_vanhentunut = true;
         }
+    }
+
+    public void vari(int harmaa) {
+        this.r = harmaa;
+        this.g = harmaa;
+        this.b = harmaa;
+    }
+
+    public void vari(int r, int g, int b) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+    }
+
+    public static void oletus_vari(int harmaa) {
+        oletus_r = harmaa;
+        oletus_g = harmaa;
+        oletus_b = harmaa;
+    }
+
+    public static void oletus_vari(int r, int g, int b) {
+        oletus_r = r;
+        oletus_g = g;
+        oletus_b = b;
     }
 
     public class SeinaVertailija implements Comparator<Seina> {
