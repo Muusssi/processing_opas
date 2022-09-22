@@ -7,76 +7,79 @@
   <link href="/processing_opas/prism/prism.css" rel="stylesheet" />
 </head>
 <body>
-<h1>Ohjelman kulku ja funktiot</h1>
-<a href="/processing_opas/index.html">Etusivulle</a>
-
-<a name="setup"></a>
-<a name="draw"></a>
-<h3>setup() {} ja draw() {}</h3>
-<p>setup- ja draw-funktioita tarvitaan kun halutaan tehdä ohjelmia, jotka eivät pääty heti kun kaikki komennot on suoritettu. Niitä tarvitaan myös kaikissa interaktiivissa ohjelmissa. Ensiksi määritellään <code class="language-processing">setup()</code> eli valmistelu funktio. setup-funktioon kirjoitetaan koodi, joka suoritetaan ohjelman aluksi valmisteluna. Esimerkiksi <code class="language-processing">size()</code> pitää määrittää setup-funktiossa. <code class="language-processing">draw()</code> eli piirrä funktion sisältö ajetaan uudestaan ja uudestaan, joten sen avulla voidaan esimerkiksi animoida.</p>
-<p>Esim. seuraava ohjelma käyttää setup() ja draw() funktioita ja piirtää ympyröitä kursorin osoittaamaan kohtaan.</p>
-<pre><code class="language-processing">// valmistelut
-void setup() {
-  size(400, 300);
-}
-
-// uudelleen ja uudellen ajettava koodi
-void draw() {
-  // piirtää ympyrän kursorin kohdalle
-  ellipse(mouseX, mouseY, 30, 30);
-}</code></pre>
+  <div class="banner">
+    <h1>Ohjelman kulku ja funktiot</h1>
+    <a href="/processing_opas/index.html">Etusivulle</a>
+  </div>
 
 
-
-<a name="if"></a>
-<h3>if ja else</h3>
-<code class="language-processing"><pre>if (ehto) {
-  //suoritetaan jos ehto täyttyy
-}</code></pre>
-<p>if-komennon avulla voi ohjata mikä osa ohjelmasta ajetaan. if lauseessa sulkujen sisään kirjoitetan jokin ehto, joka täyttyy tai ei täyty. Jos ehto täyttyy aaltosulkeiden välissä olevat käskyt suoritetaan. Jos ehto ei täyty koko kohdan yli hypätään.</p>
-<p>Esim. seuraava ohjelma piirtää vihreitä ympyröitä hiiren kohdalle jos hiiri on yli 200 pikselin päässä vasemmasta reunasta ja jos hiiri on alle 200 pikselin päässä vasemmasta reunasta piirtää punaisia ympyröitä. Muulloin ei tehdä mitään.</p>
-<code class="language-processing"><pre>void setup() {
-  size(400, 300);
-}
-
-void draw() {
-  if (mouseX > 200) {
-    // Tämä tehdään vain jos ehto täyttyy
-    fill(0,200,0);
-    ellipse(mouseX, mouseY, 30, 30);
+  <a name="setup"></a>
+  <a name="draw"></a>
+  <h3>setup() {} ja draw() {}</h3>
+  <p>setup- ja draw-funktioita tarvitaan kun halutaan tehdä ohjelmia, jotka eivät pääty heti kun kaikki komennot on suoritettu. Niitä tarvitaan myös kaikissa interaktiivissa ohjelmissa. Ensiksi määritellään <code class="language-processing">setup()</code> eli valmistelu funktio. setup-funktioon kirjoitetaan koodi, joka suoritetaan ohjelman aluksi valmisteluna. Esimerkiksi <code class="language-processing">size()</code> pitää määrittää setup-funktiossa. <code class="language-processing">draw()</code> eli piirrä funktion sisältö ajetaan uudestaan ja uudestaan, joten sen avulla voidaan esimerkiksi animoida.</p>
+  <p>Esim. seuraava ohjelma käyttää setup() ja draw() funktioita ja piirtää ympyröitä kursorin osoittaamaan kohtaan.</p>
+  <pre><code class="language-processing">// valmistelut
+  void setup() {
+    size(400, 300);
   }
-  if (mouseX < 200) {
-    // Tämä tehdään vain jos toinen ehto täyttyy
-    fill(200,0,0);
-    ellipse(mouseX, mouseY, 30, 30);
-  }
-}</code></pre>
-<a name="else"></a>
-<p>If-komennon kanssa voidaan käyttää myös else-komentoa, joka määrä mitä tehdään jos if-komennon ehto ei täyty.</p>
-<code class="language-processing"><pre>if (ehto) {
-  //suoritetaan jos ehto täyttyy
-}
-else {
-  //suoritetaan jos ehto ei täyty
-}</code></pre>
-<p>Esim. edellinen ohjelma voidaan kirjoittaa myös näin.</p>
-<code class="language-processing"><pre>void setup() {
-  size(400, 300);
-}
 
-void draw() {
-  if (mouseX > 200) {
-    // Tämä tehdään vain jos ehto täyttyy
-    fill(0,200,0);
+  // uudelleen ja uudellen ajettava koodi
+  void draw() {
+    // piirtää ympyrän kursorin kohdalle
     ellipse(mouseX, mouseY, 30, 30);
+  }</code></pre>
+
+
+
+  <a name="if"></a>
+  <h3>if ja else</h3>
+  <code class="language-processing"><pre>if (ehto) {
+    //suoritetaan jos ehto täyttyy
+  }</code></pre>
+  <p>if-komennon avulla voi ohjata mikä osa ohjelmasta ajetaan. if lauseessa sulkujen sisään kirjoitetan jokin ehto, joka täyttyy tai ei täyty. Jos ehto täyttyy aaltosulkeiden välissä olevat käskyt suoritetaan. Jos ehto ei täyty koko kohdan yli hypätään.</p>
+  <p>Esim. seuraava ohjelma piirtää vihreitä ympyröitä hiiren kohdalle jos hiiri on yli 200 pikselin päässä vasemmasta reunasta ja jos hiiri on alle 200 pikselin päässä vasemmasta reunasta piirtää punaisia ympyröitä. Muulloin ei tehdä mitään.</p>
+  <code class="language-processing"><pre>void setup() {
+    size(400, 300);
+  }
+
+  void draw() {
+    if (mouseX > 200) {
+      // Tämä tehdään vain jos ehto täyttyy
+      fill(0,200,0);
+      ellipse(mouseX, mouseY, 30, 30);
+    }
+    if (mouseX < 200) {
+      // Tämä tehdään vain jos toinen ehto täyttyy
+      fill(200,0,0);
+      ellipse(mouseX, mouseY, 30, 30);
+    }
+  }</code></pre>
+  <a name="else"></a>
+  <p>If-komennon kanssa voidaan käyttää myös else-komentoa, joka määrä mitä tehdään jos if-komennon ehto ei täyty.</p>
+  <code class="language-processing"><pre>if (ehto) {
+    //suoritetaan jos ehto täyttyy
   }
   else {
-    // Tämä tehdään vain jos ehto ei täyty
-    fill(200,0,0);
-    ellipse(mouseX, mouseY, 30, 30);
+    //suoritetaan jos ehto ei täyty
+  }</code></pre>
+  <p>Esim. edellinen ohjelma voidaan kirjoittaa myös näin.</p>
+  <code class="language-processing"><pre>void setup() {
+    size(400, 300);
   }
-}</code></pre>
 
-<script src="/processing_opas/prism/prism.js"></script>
+  void draw() {
+    if (mouseX > 200) {
+      // Tämä tehdään vain jos ehto täyttyy
+      fill(0,200,0);
+      ellipse(mouseX, mouseY, 30, 30);
+    }
+    else {
+      // Tämä tehdään vain jos ehto ei täyty
+      fill(200,0,0);
+      ellipse(mouseX, mouseY, 30, 30);
+    }
+  }</code></pre>
+
+  <script src="/processing_opas/prism/prism.js"></script>
 </body>
 </html>
